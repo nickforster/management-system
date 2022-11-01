@@ -20,6 +20,7 @@ func main() {
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", start)
+	mux.HandleFunc("/login", login)
 
 	handler := cors.AllowAll().Handler(mux)
 
@@ -29,4 +30,12 @@ func main() {
 
 func start(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("welcome"))
+}
+
+func login(w http.ResponseWriter, r *http.Request) {
+	data := readBody(w, r, "Login failed!")
+
+	if !authoriseUser(data.Username, data.Password, w) {
+		http.Error(w, "Login failed!", http.StatusUnauthorized)
+	}
 }
