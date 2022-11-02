@@ -19,6 +19,11 @@ type Claims struct {
 	jwt.StandardClaims
 }
 
+func hashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	return string(bytes), err
+}
+
 func checkPasswordHash(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
@@ -55,5 +60,41 @@ func authoriseUser(username string, password string, w http.ResponseWriter) bool
 		return false
 	} else {
 		return checkPasswordHash(password, user.Password) && generateToken(user.Id, user.Username, w)
+	}
+}
+
+func insertUser(username string, password string, email string) error {
+	password, err = hashPassword(password)
+	if err != nil {
+		return err
+	}
+	insert, err := db.Query("INSERT INTO user VALUES(null, ?, ?, ?);", username, password, email)
+	insert.Close()
+
+	return err
+}
+
+func getUserByEmail(email string) (User, error) {
+	var users []User
+	var u User
+	rows, err := db.Query("SELECT * FROM user WHERE email = ?;", email)
+	defer rows.Close()
+
+	if err != nil {
+		return users[0], err
+	}
+
+	for rows.Next() {
+		var user User
+		if err := rows.Scan(&user.Id, &user.Username, &user.Password, &user.Email); err != nil {
+			return u, err
+		} else {
+			users = append(users, user)
+		}
+	}
+	if users == nil {
+		return u, err
+	} else {
+		return users[0], err
 	}
 }
