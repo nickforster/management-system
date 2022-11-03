@@ -2,11 +2,14 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/golang-jwt/jwt/v4"
 	"github.com/rs/cors"
 	"log"
 	"net/http"
 	"net/mail"
+	"strings"
 )
 
 var db, err = sql.Open("mysql", "username:password@tcp(127.0.0.1:3306)/management_System")
@@ -23,6 +26,7 @@ func main() {
 	mux.HandleFunc("/", start)
 	mux.HandleFunc("/login", login)
 	mux.HandleFunc("/register", register)
+	mux.HandleFunc("/authorise", authorise)
 
 	handler := cors.AllowAll().Handler(mux)
 
@@ -70,4 +74,20 @@ func register(w http.ResponseWriter, r *http.Request) {
 	}
 	generateToken(user.Id, user.Username, w)
 	w.WriteHeader(200)
+}
+
+func authorise(w http.ResponseWriter, r *http.Request) {
+	reqToken := r.Header.Get("Authorization")
+	authFields := strings.Fields(reqToken)
+	token, err := jwt.Parse(authFields[1], func(t *jwt.Token) (interface{}, error) {
+		return jwtKey, nil
+	})
+
+	if err == nil && token.Valid {
+		fmt.Println("valid token")
+		w.WriteHeader(200)
+	} else {
+		fmt.Println("invalid token")
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+	}
 }
