@@ -1,1 +1,16 @@
-<p>login works!</p>
+<div class="container">
+  <a routerLink="/register"><h1>Login</h1></a>
+  <div>
+    <input type="text" [(ngModel)]="username" placeholder="Username">
+    <fa-icon [icon]="faUser"></fa-icon>
+  </div>
+  <div>
+    <input id="password" type="password" [(ngModel)]="password" placeholder="Password">
+    <fa-icon [icon]="faKey"></fa-icon>
+    <span (click)="changeVisibility()" *ngIf="password"><fa-icon [icon]="faEye"></fa-icon></span>
+  </div>
+  <button (click)="login()" >Login</button>
+  <div>
+    <a routerLink="/forgotPassword">forgot password?</a>
+  </div>
+</div>
