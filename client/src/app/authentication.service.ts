@@ -37,4 +37,27 @@ export class AuthenticationService {
       }
     );
   }
+
+  register(username: string, email: string, password: string) {
+    const headers = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache'
+      })
+    };
+
+    const data = {
+      username: username,
+      email: email,
+      password: password
+    };
+
+    this.http.post(this.API_URL + '/register', data, headers).subscribe(
+      (res: any) => {
+        localStorage.setItem(this.TOKEN_KEY, res.token);
+
+        this.router.navigateByUrl('/app');
+      }
+    );
+  }
 }

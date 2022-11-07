@@ -1,1 +1,19 @@
-<p>register works!</p>
+<div class="container">
+  <a routerLink="/login"><h1>Register</h1></a>
+
+  <div>
+    <input type="text" [(ngModel)]="username" placeholder="Username">
+    <fa-icon [icon]="faUser"></fa-icon>
+  </div>
+  <div>
+    <input type="email" [(ngModel)]="email" placeholder="Email">
+    <fa-icon [icon]="faEnvelope"></fa-icon>
+  </div>
+  <div>
+    <input id="password" type="password" [(ngModel)]="password" placeholder="Password">
+    <fa-icon [icon]="faKey"></fa-icon>
+    <span (click)="changeVisibility()" *ngIf="password"><fa-icon [icon]="faEye"></fa-icon></span>
+  </div>
+  <button (click)="register()">Register</button>
+  <p *ngIf="error">This E-Mail is already registered. Please use a different E-Mail address or <a routerLink="/login">login</a></p>
+</div>
