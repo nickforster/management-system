@@ -10,6 +10,11 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { SettingsComponent } from './settings/settings.component';
+import { FoodsComponent } from './settings/foods/foods.component';
+import { AllergiesComponent } from './settings/allergies/allergies.component';
+import { CategoriesComponent } from './settings/categories/categories.component';
+import { TablesComponent } from './settings/tables/tables.component';
 
 
 @NgModule({
@@ -17,7 +22,12 @@ import { RegisterComponent } from './register/register.component';
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    SettingsComponent,
+    FoodsComponent,
+    AllergiesComponent,
+    CategoriesComponent,
+    TablesComponent
   ],
   imports: [
     BrowserModule,

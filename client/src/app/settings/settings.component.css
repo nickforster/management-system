@@ -1,0 +1,58 @@
+.container {
+  height: 100vh;
+  background-color: #ADAABF;
+  padding: 0 2rem;
+  z-index: 0;
+}
+
+#header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 1rem;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+fa-icon {
+  font-size: 2rem;
+}
+
+#content {
+  display: flex;
+  padding-top: 1rem;
+}
+
+#labels {
+  margin-right: 3rem;
+  position: relative;
+}
+
+h2 {
+  position: relative;
+  padding: .25rem;
+  border-radius: 7px;
+  font-size: 2rem;
+  z-index: 500;
+}
+
+h2:hover {
+  cursor: pointer;
+}
+
+#hidden {
+  background-color: #bbb8ce;
+  border-radius: 5px;
+  padding: .25rem;
+  height: 2.5rem;
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+  top: 0;
+  transition: top 300ms linear;
+}
+#components{
+  width: 100%;
+}
