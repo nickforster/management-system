@@ -1,0 +1,55 @@
+.container {
+  width: 100%;
+}
+
+button, #sort-by-select {
+  border: none;
+  border-radius: .5rem;
+  padding: .25rem 1rem;
+  height: 1.75rem;
+  background-color: #5b00af;
+  color: white;
+  transform: scale(1);
+  transition: transform 200ms ease-in-out;
+}
+
+button:hover, #sort-by-select:hover {
+  transform: scale(1.1);
+  transition: transform 200ms ease-in-out;
+}
+
+#sort-by-select {
+  margin-left: 1rem;
+}
+
+#list-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.content-container {
+  margin-top: .5rem;
+  margin-right: 1.5rem;
+  padding: .25rem;
+  border: 1px solid black;
+  border-radius: 7px;
+}
+
+.content-container:hover {
+  background-color: #bbb8ce;
+}
+
+.content-headers {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.fa-icon-container fa-icon {
+  padding-right: .5rem;
+}
+
+#more-information-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}

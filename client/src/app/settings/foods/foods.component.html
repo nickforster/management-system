@@ -1,1 +1,33 @@
-<p>foods works!</p>
+<div class="container">
+  <button>
+    <fa-icon [icon]="faPlus"></fa-icon>
+    New Food...
+  </button>
+  <select id="sort-by-select" [(ngModel)]="sortBy" (ngModelChange)="sortByChange($event)">
+    <option>Sort by category</option>
+    <option *ngFor="let category of categories; let i = index">{{category.name}}</option> <!--  ngFor    -->
+  </select>
+  <div id="list-container">
+    <div class="content-container" *ngFor="let food of foods; let i = index" (click)="showDetails(i)"> <!--  ngFor    -->
+      <div class="content-headers">
+        <h3>{{food.name}}</h3>
+        <div class="fa-icon-container">
+          <fa-icon [icon]="faPenToSquare"></fa-icon>
+          <fa-icon [icon]="faXMark"></fa-icon>
+        </div>
+      </div>
+      <div *ngIf="selectedFood==i" id="more-information-container">
+        <div>
+          <div><b>Price:</b> {{food.price}}</div>
+          <div><b>Category:</b> {{categories[food.category].name}}</div>
+        </div>
+        <div>
+          <b>Allergies: </b>
+          <div *ngFor="let allergyIndex of foods[i].allergies">
+            {{allergies[allergyIndex].name}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
