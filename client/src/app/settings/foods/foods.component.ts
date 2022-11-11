@@ -13,16 +13,25 @@ export class FoodsComponent implements OnInit {
   faPlus = faPlus
   faPenToSquare = faPenToSquare
   faXMark = faXmark
+  // in popUp
+  faSignature = faSignature
+  faTag = faTag
+  faBars = faBars
 
   selectedFood: number | undefined // displays the other infos of the food
   sortBy: string = 'Sort by category'
 
   title: string = 'New Food'
+  isNewFood: boolean = true
   id: number | undefined
   name: string = '' // name of the food - ngmodel
   price: number | string = '' // price of the food - ngmodel
   selectedCategory: string = '' // name of the selected category - ngmodel
   selectedAllergies: boolean[] = []
+
+  errorMessage = false
+  currentFoodToDelete: number = -1
+  currentFoodToUpdate: number = -1
 
   // variables to fill from the DB
   allFoods: Food[] = [
@@ -166,7 +175,18 @@ export class FoodsComponent implements OnInit {
   // variable with the foods, that are currently displayed
   foods: Food[] = []
 
-  constructor() { }
+  constructor() {
+    // makes animation for the next opening visible again
+    let body = document.querySelector('body')
+    if (body != null) {
+      body.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+          this.closeModal("#new-instance-dialog")
+          this.closeModal("#delete-instance-dialog")
+        }
+      })
+    }
+  }
 
   ngOnInit(): void {
     this.loadData()
@@ -195,6 +215,83 @@ export class FoodsComponent implements OnInit {
     }
   }
 
+  openNewModal(id: number = -1) {
+    const modal: HTMLDialogElement | null = document.querySelector("#new-instance-dialog")
+    if (modal == null) return
+    modal.showModal()
+    modal.classList.add('open')
+    this.errorMessage = false
+
+    if (id == -1) { // if a new food is being added
+      this.title = 'New Food'
+      this.name = ''
+      this.price = ''
+      this.selectedCategory = this.categories[0].name
+      this.selectedAllergies = []
+      this.isNewFood = true
+    } else { // if an existing food is being edited
+      const currentFood = this.foods[id]
+      this.id = currentFood.id
+      this.title = `Edit ${currentFood.name}`
+      this.name = currentFood.name
+      this.price = currentFood.price
+      this.selectedCategory = this.categories[currentFood.category].name
+      this.selectedAllergies = []
+      for (let i = 0; i < this.allergies.length; i++) {
+        if (currentFood.allergies.includes(this.allergies[i].id)) {
+          this.selectedAllergies[i] = true
+        }
+      }
+      this.isNewFood = false
+      this.currentFoodToUpdate = this.foods[id].id
+    }
+  }
+
+  openDeleteModal(id: number) {
+    const modal: HTMLDialogElement | null = document.querySelector("#delete-instance-dialog")
+    if (modal == null) return
+    this.title = this.foods[id].name
+    modal.showModal()
+    modal.classList.add('open')
+    this.currentFoodToDelete = this.foods[id].id
+  }
+
+  closeModal(selector: string) {
+    const modal: HTMLDialogElement | null = document.querySelector(selector)
+    if (modal != null) {
+      modal.classList.remove('open')
+      setTimeout(() => {
+        modal.close()
+      }, 250)
+    }
+  }
+
+  saveFood() {
+    if (this.name == '' || this.price == '') {
+      this.errorMessage = true
+      return
+    }
+    let selectedAllergiesIds: number[] = []
+    for (let i = 0; i < this.selectedAllergies.length; i++) {
+      if (this.selectedAllergies[i]) {
+        selectedAllergiesIds.push(this.allergies[i].id)
+      }
+    }
+    if (this.isNewFood) {
+      // TODO make request addFood with name=this.title, price=this.price, category=this.categories[this.selectedCategory].id, allergies=selectedAllergiesIds
+    } else {
+      // TODO make request updateFood with id = this.currentFoodToUpdate, name=this.title, price=this.price, category=this.categories[this.selectedCategory].id, allergies=selectedAllergiesIds
+    }
+    this.errorMessage = false
+    this.closeModal("#new-instance-dialog")
+    this.loadData()
+  }
+
+  deleteFood() {
+    // TODO make request deleteFood with id = this.currentFoodToDelete
+    this.loadData()
+    this.closeModal("#delete-instance-dialog")
+  }
 
   loadData() {
     // TODO make request to load foods (this.allFoods), categories (this.categories) allergies (this.allergies) from DB

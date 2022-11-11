@@ -1,5 +1,5 @@
 <div class="container">
-  <button>
+  <button (click)="openNewModal()">
     <fa-icon [icon]="faPlus"></fa-icon>
     New Food...
   </button>
@@ -12,8 +12,8 @@
       <div class="content-headers">
         <h3>{{food.name}}</h3>
         <div class="fa-icon-container">
-          <fa-icon [icon]="faPenToSquare"></fa-icon>
-          <fa-icon [icon]="faXMark"></fa-icon>
+          <fa-icon [icon]="faPenToSquare" (click)="openNewModal(i)"></fa-icon>
+          <fa-icon [icon]="faXMark" (click)="openDeleteModal(i)"></fa-icon>
         </div>
       </div>
       <div *ngIf="selectedFood==i" id="more-information-container">
@@ -31,3 +31,50 @@
     </div>
   </div>
 </div>
+
+<!-- Modal to add a new Food -->
+
+<dialog data-keyboard="false" id="new-instance-dialog">
+  <h2>{{title}}</h2>
+  <div id="modal-input-container">
+    <div>
+      <div class="direct-input-container">
+        <input type="text" [(ngModel)]="name" placeholder="Name">
+        <fa-icon [icon]="faSignature"></fa-icon>
+      </div>
+      <div class="direct-input-container">
+        <input type="number" [(ngModel)]="price" placeholder="Price" min="0">
+        <fa-icon [icon]="faTag"></fa-icon>
+      </div>
+      <div class="direct-input-container">
+        <select [(ngModel)]="selectedCategory" class="direct-input-container" id="category-select">
+          <option *ngFor="let category of categories">{{category.name}}</option> <!--  ngFor    -->
+        </select>
+        <fa-icon [icon]="faBars"></fa-icon>
+      </div>
+    </div>
+    <div id="checkbox-input-container">
+      <div *ngFor="let allergy of allergies; let i = index"> <!--  ngFor    -->
+        <label>{{allergy.name.charAt(0).toUpperCase() + allergy.name.slice(1)}}
+          <input type="checkbox" [(ngModel)]="selectedAllergies[i]">
+        </label>
+      </div>
+    </div>
+  </div>
+  <div id="button-container">
+    <button (click)="saveFood()">save</button>
+    <button (click)="closeModal('#new-instance-dialog')">abort</button>
+  </div>
+  <p id="error-msg" *ngIf="errorMessage">Please fill all Fields</p>
+</dialog>
+
+<!-- dialog to delete instance-->
+
+<dialog data-keyboard="false" id="delete-instance-dialog">
+  <p>Do you really want to delete {{title}}</p>
+  <div id="button-container-delete">
+    <button (click)="deleteFood()">yes</button>
+    <button (click)="closeModal('#delete-instance-dialog')">no</button>
+  </div>
+</dialog>
+
