@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {faBars, faPenToSquare, faPlus, faSignature, faTag, faXmark} from '@fortawesome/free-solid-svg-icons';
-import {AuthenticationService} from "../../authentication.service";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-foods',
