@@ -1,1 +1,45 @@
-<p>allergies works!</p>
+<div class="container">
+  <button (click)="openNewModal()">
+    <fa-icon [icon]="faPlus"></fa-icon>
+    New Allergy...
+  </button>
+  <div id="list-container">
+    <div class="content-container" *ngFor="let allergy of allergies; let i = index">
+      <!--  ngFor    -->
+      <div class="content-headers">
+        <h3>{{allergy.name}}</h3>
+        <div class="fa-icon-container">
+          <fa-icon [icon]="faPenToSquare" (click)="openNewModal(i)"></fa-icon>
+          <fa-icon [icon]="faXMark" (click)="openDeleteModal(i)"></fa-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal to add a new instance -->
+
+<dialog data-keyboard="false" id="new-instance-dialog">
+  <h2>{{title}}</h2>
+  <div id="modal-input-container">
+    <div class="direct-input-container">
+      <input type="text" [(ngModel)]="name" placeholder="Name">
+      <fa-icon [icon]="faSignature"></fa-icon>
+    </div>
+  </div>
+  <div id="button-container-new">
+    <button (click)="saveAllergy()">save</button>
+    <button (click)="closeModal('#new-instance-dialog')">abort</button>
+  </div>
+  <p id="error-msg" *ngIf="errorMessage">Please fill all Fields</p>
+</dialog>
+
+<!-- dialog to delete instance-->
+
+<dialog data-keyboard="false" id="delete-instance-dialog">
+  <p>Do you really want to delete {{title}}</p>
+  <div id="button-container-delete">
+    <button (click)="deleteAllergy()">yes</button>
+    <button (click)="closeModal('#delete-instance-dialog')">no</button>
+  </div>
+</dialog>
