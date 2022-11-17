@@ -172,6 +172,8 @@ export class FoodsComponent implements OnInit {
 
   // variable with the foods, that are currently displayed
   foods: Food[] = []
+  // variable for the allergies in the show details section
+  selectedAllergiesString: String[] = []
 
   constructor() {
     // makes animation for the next opening visible again
@@ -210,6 +212,20 @@ export class FoodsComponent implements OnInit {
       this.selectedFood = undefined
     } else {
       this.selectedFood = index
+
+      const activeCategory = this.categories.find(i => i.id == this.foods[index].category)
+      if (activeCategory !== undefined) {
+        this.selectedCategory = activeCategory.name
+      }
+
+      this.selectedAllergiesString = []
+      for (let i = 0; i < this.allergies.length; i++) {
+        if (this.foods[index].allergies.includes(this.allergies[i].id)) {
+          this.selectedAllergiesString[i] = this.allergies[i].name
+        }
+      }
+      console.log(this.selectedAllergiesString)
+
     }
   }
 
@@ -233,7 +249,12 @@ export class FoodsComponent implements OnInit {
       this.title = `Edit ${currentFood.name}`
       this.name = currentFood.name
       this.price = currentFood.price
-      this.selectedCategory = this.categories[currentFood.category].name
+      // get the correct selected category
+      const activeCategory = this.categories.find(i => i.id == currentFood.category)
+      if (activeCategory !== undefined) {
+        this.selectedCategory = activeCategory.name
+      }
+      // get the correct selected allergies
       this.selectedAllergies = []
       for (let i = 0; i < this.allergies.length; i++) {
         if (currentFood.allergies.includes(this.allergies[i].id)) {

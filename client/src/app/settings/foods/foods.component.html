@@ -19,12 +19,12 @@
       <div *ngIf="selectedFood==i" id="more-information-container">
         <div>
           <div><b>Price:</b> {{food.price}}</div>
-          <div><b>Category:</b> {{categories[food.category].name}}</div>
+          <div><b>Category:</b> {{selectedCategory}}</div>
         </div>
         <div>
           <b>Allergies: </b>
-          <div *ngFor="let allergyIndex of foods[i].allergies">
-            {{allergies[allergyIndex].name}}
+          <div *ngFor="let allergy of selectedAllergiesString">
+            {{allergy}}
           </div>
         </div>
       </div>
