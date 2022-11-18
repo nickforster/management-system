@@ -4,7 +4,7 @@ import {faArrowsUpDown, faPenToSquare, faPlus, faSignature, faXmark} from "@fort
 @Component({
   selector: 'app-tables',
   templateUrl: './tables.component.html',
-  styleUrls: ['./tables.component.css']
+  styleUrls: ['./tables.component.css', '../sub.component.css']
 })
 export class TablesComponent implements OnInit {
   // Fontawesome Icons

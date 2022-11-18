@@ -4,7 +4,7 @@ import {faPenToSquare, faPlus, faSignature, faXmark} from "@fortawesome/free-sol
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.css']
+  styleUrls: ['./categories.component.css', '../sub.component.css']
 })
 export class CategoriesComponent implements OnInit {
   // Fontawesome Icons

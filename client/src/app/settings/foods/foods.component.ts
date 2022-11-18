@@ -4,7 +4,7 @@ import {faBars, faPenToSquare, faPlus, faSignature, faTag, faXmark} from '@forta
 @Component({
   selector: 'app-foods',
   templateUrl: './foods.component.html',
-  styleUrls: ['./foods.component.css'],
+  styleUrls: ['./foods.component.css', '../sub.component.css'],
 })
 export class FoodsComponent implements OnInit {
   // Fontawesome Icons

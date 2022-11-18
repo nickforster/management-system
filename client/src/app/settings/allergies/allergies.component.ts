@@ -4,7 +4,7 @@ import {faPenToSquare, faPlus, faSignature, faXmark} from "@fortawesome/free-sol
 @Component({
   selector: 'app-allergies',
   templateUrl: './allergies.component.html',
-  styleUrls: ['./allergies.component.css']
+  styleUrls: ['./allergies.component.css', '../sub.component.css']
 })
 export class AllergiesComponent implements OnInit {
   // Fontawesome Icons
