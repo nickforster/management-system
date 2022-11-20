@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	"encoding/json"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
@@ -13,8 +12,7 @@ import (
 	"strings"
 )
 
-var db, err = sql.Open("mysql", "username:password@tcp(127.0.0.1:3306)/management_System")
-
+// connection to database happens in external connection.go file
 const port = "3000"
 
 func main() {
