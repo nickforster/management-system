@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {faPenToSquare, faPlus, faSignature, faXmark} from "@fortawesome/free-solid-svg-icons";
+import {CategoryService} from "../../services/category.service";
 
 @Component({
   selector: 'app-categories',
@@ -23,30 +24,9 @@ export class CategoriesComponent implements OnInit {
   currentCategoryToDelete: number = -1
   currentCategoryToUpdate: number = -1
 
-  categories: Category[] = [
-    {
-      id: 1,
-      name: "pizza"
-    },
-    {
-      id: 2,
-      name: "pasta"
-    },
-    {
-      id: 3,
-      name: "other food"
-    },
-    {
-      id: 4,
-      name: "non-alcoholic drinks"
-    },
-    {
-      id: 6,
-      name: "alcoholic drinks"
-    },
-  ]
+  categories: Category[] = []
 
-  constructor() {
+  constructor(private categoryService: CategoryService) {
     // makes animation for the next opening visible again
     let body = document.querySelector('body')
     if (body != null) {
@@ -126,7 +106,9 @@ export class CategoriesComponent implements OnInit {
   }
 
   loadData() {
-    // TODO make request to load categories from DB into this.categories
+    this.categoryService.getAllCategories().subscribe(res => {
+      this.categories = JSON.parse(JSON.stringify(res))
+    })
   }
 
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/golang-jwt/jwt/v4"
@@ -27,6 +28,7 @@ func main() {
 	mux.HandleFunc("/login", login)
 	mux.HandleFunc("/register", register)
 	mux.HandleFunc("/authorise", authorise)
+	mux.HandleFunc("/getCategories", getCategories)
 
 	handler := cors.AllowAll().Handler(mux)
 
@@ -39,7 +41,7 @@ func start(w http.ResponseWriter, r *http.Request) {
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
-	data := readBody(w, r, "Login failed!")
+	data := readUserBody(w, r, "Login failed!")
 
 	if !authoriseUser(data.Username, data.Password, w) {
 		http.Error(w, "Login failed!", http.StatusUnauthorized)
@@ -47,7 +49,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 }
 
 func register(w http.ResponseWriter, r *http.Request) {
-	data := readBody(w, r, "Registration failed!")
+	data := readUserBody(w, r, "Registration failed!")
 
 	user, _ := getUserByEmail(data.Email)
 	if user.Username != "" { // user from database where email = input --> should not exist
@@ -89,5 +91,18 @@ func authorise(w http.ResponseWriter, r *http.Request) {
 	} else {
 		fmt.Println("invalid token")
 		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+	}
+}
+
+func getCategories(w http.ResponseWriter, r *http.Request) {
+	var categories []Category
+
+	categories, err = getAllCategories()
+	if err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	} else {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusCreated)
+		json.NewEncoder(w).Encode(categories)
 	}
 }

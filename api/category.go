@@ -5,35 +5,6 @@ type Category struct {
 	Name string `json:"name"`
 }
 
-func insertCategory(name string) error {
-	insert, err := db.Query("INSERT INTO categories VALUES(null, ?);", name)
-	err = insert.Close()
-	if err != nil {
-		return err
-	}
-
-	return err
-}
-
-func deleteCategory(id int) error {
-	rows, err := db.Query("DELETE FROM categories WHERE id=?", id)
-	err = rows.Close()
-	if err != nil {
-		return err
-	}
-
-	return err
-}
-
-func updateCategory(id int, name string) error {
-	rows, err := db.Query("UPDATE categories set name=? WHERE id=?", name, id)
-	err = rows.Close()
-	if err != nil {
-		return err
-	}
-	return err
-}
-
 func getAllCategories() ([]Category, error) {
 	var categories []Category
 	rows, err := db.Query("SELECT * from categories")
@@ -52,4 +23,33 @@ func getAllCategories() ([]Category, error) {
 	}
 
 	return categories, err
+}
+
+func insertCategoryIntoDB(name string) error {
+	insert, err := db.Query("INSERT INTO categories VALUES(null, ?);", name)
+	err = insert.Close()
+	if err != nil {
+		return err
+	}
+
+	return err
+}
+
+func deleteCategory(id int) error {
+	rows, err := db.Query("DELETE FROM categories WHERE category_id=?", id)
+	err = rows.Close()
+	if err != nil {
+		return err
+	}
+
+	return err
+}
+
+func updateCategory(id int, name string) error {
+	rows, err := db.Query("UPDATE categories set name=? WHERE category_id=?", name, id)
+	err = rows.Close()
+	if err != nil {
+		return err
+	}
+	return err
 }
