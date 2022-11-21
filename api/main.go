@@ -27,6 +27,9 @@ func main() {
 	mux.HandleFunc("/register", register)
 	mux.HandleFunc("/authorise", authorise)
 	mux.HandleFunc("/getCategories", getCategories)
+	mux.HandleFunc("/insertCategory", insertCategory)
+	mux.HandleFunc("/updateCategory", updateCategory)
+	mux.HandleFunc("/deleteCategory", deleteCategory)
 
 	handler := cors.AllowAll().Handler(mux)
 
@@ -102,5 +105,38 @@ func getCategories(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
 		json.NewEncoder(w).Encode(categories)
+	}
+}
+
+func insertCategory(w http.ResponseWriter, r *http.Request) {
+	var errorMessage = "Category could not be added"
+	data := readCategoryBody(w, r, errorMessage)
+	err := insertCategoryIntoDB(data.Name)
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(200)
+	}
+}
+
+func updateCategory(w http.ResponseWriter, r *http.Request) {
+	var errorMessage = "Category could not be updated"
+	data := readCategoryBody(w, r, errorMessage)
+	err := updateCategoryInDB(data.Id, data.Name)
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(200)
+	}
+}
+
+func deleteCategory(w http.ResponseWriter, r *http.Request) {
+	var errorMessage = "Category could not be deleted"
+	data := readCategoryBody(w, r, errorMessage)
+	err := deleteCategoryInDB(data.Id)
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(200)
 	}
 }

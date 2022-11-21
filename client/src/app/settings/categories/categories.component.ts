@@ -90,9 +90,11 @@ export class CategoriesComponent implements OnInit {
     }
 
     if (this.isNewCategory) {
-      // TODO make request addCategory with name=this.title
+      this.categoryService.insertCategory(this.name)
+      // TODO update this.categories to instantly add the new category
     } else {
-      // TODO make request updateCategory with id = this.currentCategoryToUpdate, name=this.title
+      this.categoryService.updateCategory(this.currentCategoryToUpdate, this.name)
+      // TODO update this.categories to instantly add the new category
     }
     this.errorMessage = false
     this.closeModal("#new-instance-dialog")
@@ -100,7 +102,8 @@ export class CategoriesComponent implements OnInit {
   }
 
   deleteCategory() {
-    // TODO make request deleteCategory with id = this.currentCategoryToDelete
+    this.categoryService.deleteCategory(this.currentCategoryToDelete)
+    // TODO update this.categories to instantly add the new category
     this.loadData()
     this.closeModal("#delete-instance-dialog")
   }

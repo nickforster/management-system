@@ -35,21 +35,21 @@ func insertCategoryIntoDB(name string) error {
 	return err
 }
 
-func deleteCategory(id int) error {
+func updateCategoryInDB(id int, name string) error {
+	rows, err := db.Query("UPDATE categories set name=? WHERE category_id=?", name, id)
+	err = rows.Close()
+	if err != nil {
+		return err
+	}
+	return err
+}
+
+func deleteCategoryInDB(id int) error {
 	rows, err := db.Query("DELETE FROM categories WHERE category_id=?", id)
 	err = rows.Close()
 	if err != nil {
 		return err
 	}
 
-	return err
-}
-
-func updateCategory(id int, name string) error {
-	rows, err := db.Query("UPDATE categories set name=? WHERE category_id=?", name, id)
-	err = rows.Close()
-	if err != nil {
-		return err
-	}
 	return err
 }
