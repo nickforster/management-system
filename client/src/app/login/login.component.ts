@@ -28,9 +28,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log("login")
     if (this.username != '' && this.password != '') {
-      console.log("starting")
       this.authenticationService.login(this.username, this.password)
     }
   }
