@@ -91,20 +91,21 @@ export class CategoriesComponent implements OnInit {
 
     if (this.isNewCategory) {
       this.categoryService.insertCategory(this.name)
-      // TODO update this.categories to instantly add the new category
     } else {
       this.categoryService.updateCategory(this.currentCategoryToUpdate, this.name)
-      // TODO update this.categories to instantly add the new category
     }
     this.errorMessage = false
+    setTimeout(() => {
+      this.loadData()
+    }, 10)
     this.closeModal("#new-instance-dialog")
-    this.loadData()
   }
 
   deleteCategory() {
     this.categoryService.deleteCategory(this.currentCategoryToDelete)
-    // TODO update this.categories to instantly add the new category
-    this.loadData()
+    setTimeout(() => {
+      this.loadData()
+    }, 10)
     this.closeModal("#delete-instance-dialog")
   }
 
@@ -113,7 +114,6 @@ export class CategoriesComponent implements OnInit {
       this.categories = JSON.parse(JSON.stringify(res))
     })
   }
-
 }
 
 interface Category {
