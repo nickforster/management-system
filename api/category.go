@@ -1,13 +1,14 @@
 package main
 
 type Category struct {
-	Id   int    `json:"id"`
-	Name string `json:"name"`
+	Id     int    `json:"id"`
+	Name   string `json:"name"`
+	UserID int    `json: "userId"`
 }
 
-func getAllCategories() ([]Category, error) {
+func getAllCategories(userID int) ([]Category, error) {
 	var categories []Category
-	rows, err := db.Query("SELECT * from categories")
+	rows, err := db.Query("SELECT category_id, name from categories where user_id = ?", userID)
 	if err != nil {
 		return categories, err
 	}
@@ -25,8 +26,8 @@ func getAllCategories() ([]Category, error) {
 	return categories, err
 }
 
-func insertCategoryIntoDB(name string) error {
-	insert, err := db.Query("INSERT INTO categories VALUES(null, ?);", name)
+func insertCategoryIntoDB(name string, userID int) error {
+	insert, err := db.Query("INSERT INTO categories VALUES(null, ?, ?);", name, userID)
 	err = insert.Close()
 	if err != nil {
 		return err

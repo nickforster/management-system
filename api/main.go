@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/rs/cors"
@@ -87,18 +86,17 @@ func authorise(w http.ResponseWriter, r *http.Request) {
 	})
 
 	if err == nil && token.Valid {
-		fmt.Println("valid token")
 		w.WriteHeader(200)
 	} else {
-		fmt.Println("invalid token")
 		http.Error(w, "Not logged in!", http.StatusUnauthorized)
 	}
 }
 
 func getCategories(w http.ResponseWriter, r *http.Request) {
 	var categories []Category
+	data := readCategoryBody(w, r, "Category could not be added")
 
-	categories, err = getAllCategories()
+	categories, err = getAllCategories(data.UserID)
 	if err != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	} else {
@@ -111,7 +109,7 @@ func getCategories(w http.ResponseWriter, r *http.Request) {
 func insertCategory(w http.ResponseWriter, r *http.Request) {
 	var errorMessage = "Category could not be added"
 	data := readCategoryBody(w, r, errorMessage)
-	err := insertCategoryIntoDB(data.Name)
+	err := insertCategoryIntoDB(data.Name, data.UserID)
 	if err != nil {
 		http.Error(w, errorMessage, http.StatusInternalServerError)
 	} else {

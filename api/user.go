@@ -32,7 +32,7 @@ func checkPasswordHash(password, hash string) bool {
 func getUserByUsername(username string) (User, error) {
 	var users []User
 	var u User
-	rows, err := db.Query("SELECT * FROM user WHERE username = ?;", username)
+	rows, err := db.Query("SELECT * FROM users WHERE username = ?;", username)
 	defer rows.Close()
 
 	if err != nil {
@@ -68,7 +68,7 @@ func insertUser(username string, password string, email string) error {
 	if err != nil {
 		return err
 	}
-	insert, err := db.Query("INSERT INTO user VALUES(null, ?, ?, ?);", username, password, email)
+	insert, err := db.Query("INSERT INTO users VALUES(null, ?, ?, ?);", username, password, email)
 	insert.Close()
 
 	return err
@@ -77,7 +77,7 @@ func insertUser(username string, password string, email string) error {
 func getUserByEmail(email string) (User, error) {
 	var users []User
 	var u User
-	rows, err := db.Query("SELECT * FROM user WHERE email = ?;", email)
+	rows, err := db.Query("SELECT * FROM users WHERE email = ?;", email)
 	defer rows.Close()
 
 	if err != nil {
