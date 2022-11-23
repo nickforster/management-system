@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {faPenToSquare, faPlus, faSignature, faXmark} from "@fortawesome/free-solid-svg-icons";
+import {AllergyService} from "../../services/allergy.service";
 
 @Component({
   selector: 'app-allergies',
@@ -46,7 +47,7 @@ export class AllergiesComponent implements OnInit {
     },
   ]
 
-  constructor() {
+  constructor(private allergyService: AllergyService) {
     // makes animation for the next opening visible again
     let body = document.querySelector('body')
     if (body != null) {
@@ -110,23 +111,29 @@ export class AllergiesComponent implements OnInit {
     }
 
     if (this.isNewAllergy) {
-      // TODO make request addAllergy with name=this.title
+      this.allergyService.insertAllergy(this.name)
     } else {
-      // TODO make request updateAllergy with id = this.currentAllergyToUpdate, name=this.title
+      this.allergyService.updateAllergy(this.currentAllergyToUpdate, this.name)
     }
     this.errorMessage = false
+    setTimeout(() => {
+      this.loadData()
+    }, 10)
     this.closeModal("#new-instance-dialog")
-    this.loadData()
   }
 
   deleteAllergy() {
-    // TODO make request deleteAllergy with id = this.currentAllergyToDelete
-    this.loadData()
+    this.allergyService.deleteAllergy(this.currentAllergyToDelete)
+    setTimeout(() => {
+      this.loadData()
+    }, 10)
     this.closeModal("#delete-instance-dialog")
   }
 
   loadData() {
-    // TODO make request to load allergies from DB into this.allergies
+    this.allergyService.getAllAllergies().subscribe(res => {
+      this.allergies = JSON.parse(JSON.stringify(res))
+    })
   }
 }
 

@@ -29,6 +29,10 @@ func main() {
 	mux.HandleFunc("/insertCategory", insertCategory)
 	mux.HandleFunc("/updateCategory", updateCategory)
 	mux.HandleFunc("/deleteCategory", deleteCategory)
+	mux.HandleFunc("/getAllergies", getAllergies)
+	mux.HandleFunc("/insertAllergy", insertAllergy)
+	mux.HandleFunc("/updateAllergy", updateAllergy)
+	mux.HandleFunc("/deleteAllergy", deleteAllergy)
 
 	handler := cors.AllowAll().Handler(mux)
 
@@ -132,6 +136,53 @@ func deleteCategory(w http.ResponseWriter, r *http.Request) {
 	var errorMessage = "Category could not be deleted"
 	data := readCategoryBody(w, r, errorMessage)
 	err := deleteCategoryInDB(data.Id)
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(200)
+	}
+}
+
+func getAllergies(w http.ResponseWriter, r *http.Request) {
+	var allergies []Allergy
+	data := readCategoryBody(w, r, "Category could not be added")
+
+	allergies, err = getAllAllergies(data.UserID)
+	if err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	} else {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusCreated)
+		json.NewEncoder(w).Encode(allergies)
+	}
+}
+
+func insertAllergy(w http.ResponseWriter, r *http.Request) {
+	var errorMessage = "Allergy could not be added"
+	data := readAllergyBody(w, r, errorMessage)
+	err := insertAllergyIntoDB(data.Name, data.UserID)
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(200)
+	}
+}
+
+func updateAllergy(w http.ResponseWriter, r *http.Request) {
+	var errorMessage = "Allergy could not be updated"
+	data := readAllergyBody(w, r, errorMessage)
+	err := updateAllergyInDB(data.Id, data.Name)
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(200)
+	}
+}
+
+func deleteAllergy(w http.ResponseWriter, r *http.Request) {
+	var errorMessage = "Allergy could not be deleted"
+	data := readAllergyBody(w, r, errorMessage)
+	err := deleteAllergyInDB(data.Id)
 	if err != nil {
 		http.Error(w, errorMessage, http.StatusInternalServerError)
 	} else {

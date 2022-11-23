@@ -44,6 +44,23 @@ func readCategoryBody(w http.ResponseWriter, r *http.Request, errorMessage strin
 	return data
 }
 
+func readAllergyBody(w http.ResponseWriter, r *http.Request, errorMessage string) Allergy {
+	body, err := ioutil.ReadAll(r.Body)
+	data := Allergy{} // struct from allergy.go file
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusUnauthorized)
+		panic(err.Error())
+	}
+
+	err = json.Unmarshal(body, &data)
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusInternalServerError)
+		panic(err.Error())
+	}
+
+	return data
+}
+
 func generateToken(id int, username string, w http.ResponseWriter) bool {
 	expirationTime := time.Now().Add(15 * time.Minute)
 	claims := &Claims{
