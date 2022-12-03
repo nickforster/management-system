@@ -3,7 +3,7 @@ package main
 type Category struct {
 	Id     int    `json:"id"`
 	Name   string `json:"name"`
-	UserID int    `json: "userId"`
+	UserID int    `json:"userId"`
 }
 
 func getAllCategories(userID int) ([]Category, error) {
