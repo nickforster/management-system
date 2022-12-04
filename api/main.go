@@ -33,6 +33,10 @@ func main() {
 	mux.HandleFunc("/insertAllergy", insertAllergy)
 	mux.HandleFunc("/updateAllergy", updateAllergy)
 	mux.HandleFunc("/deleteAllergy", deleteAllergy)
+	mux.HandleFunc("/getTables", getTables)
+	mux.HandleFunc("/insertTable", insertTable)
+	mux.HandleFunc("/updateTable", updateTable)
+	mux.HandleFunc("/deleteTable", deleteTable)
 
 	handler := cors.AllowAll().Handler(mux)
 
@@ -183,6 +187,53 @@ func deleteAllergy(w http.ResponseWriter, r *http.Request) {
 	var errorMessage = "Allergy could not be deleted"
 	data := readAllergyBody(w, r, errorMessage)
 	err := deleteAllergyInDB(data.Id)
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(200)
+	}
+}
+
+func getTables(w http.ResponseWriter, r *http.Request) {
+	var tables []Table
+	data := readTableBody(w, r, "Table could not be added")
+
+	tables, err = getAllTables(data.UserID)
+	if err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	} else {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusCreated)
+		json.NewEncoder(w).Encode(tables)
+	}
+}
+
+func insertTable(w http.ResponseWriter, r *http.Request) {
+	var errorMessage = "Table could not be added"
+	data := readTableBody(w, r, errorMessage)
+	err := insertTableIntoDB(data.Name, data.AmountPeople, data.UserID)
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(200)
+	}
+}
+
+func updateTable(w http.ResponseWriter, r *http.Request) {
+	var errorMessage = "Table could not be updated"
+	data := readTableBody(w, r, errorMessage)
+	err := updateTableInDB(data.Id, data.Name, data.AmountPeople)
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(200)
+	}
+}
+
+func deleteTable(w http.ResponseWriter, r *http.Request) {
+	var errorMessage = "Table could not be deleted"
+	data := readTableBody(w, r, errorMessage)
+	err := deleteTableInDB(data.Id)
 	if err != nil {
 		http.Error(w, errorMessage, http.StatusInternalServerError)
 	} else {
