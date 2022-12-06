@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {faArrowsUpDown, faPenToSquare, faPlus, faSignature, faXmark} from "@fortawesome/free-solid-svg-icons";
+import {TableService} from "../../services/table.service";
 
 @Component({
   selector: 'app-tables',
@@ -83,7 +84,7 @@ export class TablesComponent implements OnInit {
     }
   ]
 
-  constructor() {
+  constructor(private tableService: TableService) {
     // makes animation for the next opening visible again
     let body = document.querySelector('body')
     if (body != null) {
@@ -149,23 +150,29 @@ export class TablesComponent implements OnInit {
     }
 
     if (this.isNewTable) {
-      // TODO make request addTable with name=this.title, amountPeople=this.amountPeople
+      this.tableService.insertTable(this.name, Number(this.amountPeople))
     } else {
-      // TODO make request updateTable with id = this.currentTableToUpdate, name=this.title, amountPeople=this.amountPeople
+      this.tableService.updateTable(this.currentTableToUpdate, this.name, Number(this.amountPeople))
     }
     this.errorMessage = false
+    setTimeout(() => {
+      this.loadData()
+    }, 10)
     this.closeModal("#new-instance-dialog")
-    this.loadData()
   }
 
   deleteTable() {
-    // TODO make request deleteTable with id = this.currentTableToDelete
-    this.loadData()
+    this.tableService.deleteTable(this.currentTableToDelete)
+    setTimeout(() => {
+      this.loadData()
+    }, 10)
     this.closeModal("#delete-instance-dialog")
   }
 
   loadData() {
-    // TODO make request to load tables from DB into this.tables
+    this.tableService.getAllTables().subscribe(res => {
+      this.tables = JSON.parse(JSON.stringify(res))
+    })
   }
 }
 
