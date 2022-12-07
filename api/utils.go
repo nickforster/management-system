@@ -78,6 +78,23 @@ func readTableBody(w http.ResponseWriter, r *http.Request, errorMessage string) 
 	return data
 }
 
+func readFoodBody(w http.ResponseWriter, r *http.Request, errorMessage string) Food {
+	body, err := ioutil.ReadAll(r.Body)
+	data := Food{} // struct from food.go file
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusUnauthorized)
+		panic(err.Error())
+	}
+
+	err = json.Unmarshal(body, &data)
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusInternalServerError)
+		panic(err.Error())
+	}
+
+	return data
+}
+
 func generateToken(id int, username string, w http.ResponseWriter) bool {
 	expirationTime := time.Now().Add(15 * time.Minute)
 	claims := &Claims{
