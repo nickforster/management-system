@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {faBars, faPenToSquare, faPlus, faSignature, faTag, faXmark} from '@fortawesome/free-solid-svg-icons';
+import {FoodService} from "../../services/food.service";
+import {AllergyService} from "../../services/allergy.service";
+import {CategoryService} from "../../services/category.service";
 
 @Component({
   selector: 'app-foods',
@@ -175,7 +178,11 @@ export class FoodsComponent implements OnInit {
   // variable for the allergies in the show details section
   selectedAllergiesString: String[] = []
 
-  constructor() {
+  constructor(
+    private foodService: FoodService,
+    private allergyService: AllergyService,
+    private categoryService: CategoryService
+  ) {
     // makes animation for the next opening visible again
     let body = document.querySelector('body')
     if (body != null) {
@@ -220,12 +227,12 @@ export class FoodsComponent implements OnInit {
 
       this.selectedAllergiesString = []
       for (let i = 0; i < this.allergies.length; i++) {
-        if (this.foods[index].allergies.includes(this.allergies[i].id)) {
-          this.selectedAllergiesString[i] = this.allergies[i].name
+        if (this.foods[index].allergies !== null) {
+          if (this.foods[index].allergies.includes(this.allergies[i].id)) {
+            this.selectedAllergiesString[i] = this.allergies[i].name
+          }
         }
       }
-      console.log(this.selectedAllergiesString)
-
     }
   }
 
@@ -297,23 +304,38 @@ export class FoodsComponent implements OnInit {
       }
     }
     if (this.isNewFood) {
-      // TODO make request addFood with name=this.title, price=this.price, category=this.categories[this.selectedCategory].id, allergies=selectedAllergiesIds
+      const activeCategory = this.categories.find(i => i.name == this.selectedCategory)
+      if (activeCategory !== undefined) {
+        this.foodService.insertFood(this.name, Number(this.price), activeCategory.id, selectedAllergiesIds)
+      }
     } else {
-      // TODO make request updateFood with id = this.currentFoodToUpdate, name=this.title, price=this.price, category=this.categories[this.selectedCategory].id, allergies=selectedAllergiesIds
+      this.foodService.updateFood(this.currentFoodToUpdate, this.name, Number(this.price), this.categories[Number(this.selectedCategory)].id, selectedAllergiesIds)
     }
     this.errorMessage = false
+    setTimeout(() => {
+      this.loadData()
+    }, 10)
     this.closeModal("#new-instance-dialog")
-    this.loadData()
   }
 
   deleteFood() {
-    // TODO make request deleteFood with id = this.currentFoodToDelete
-    this.loadData()
+    this.foodService.deleteFood(this.currentFoodToDelete)
+    setTimeout(() => {
+      this.loadData()
+    }, 10)
     this.closeModal("#delete-instance-dialog")
   }
 
   loadData() {
-    // TODO make request to load foods (this.allFoods), categories (this.categories) allergies (this.allergies) from DB
+    this.foodService.getAllFoods().subscribe(res => {
+      this.foods = JSON.parse(JSON.stringify(res))
+    })
+    this.allergyService.getAllAllergies().subscribe(res => {
+      this.allergies = JSON.parse(JSON.stringify(res))
+    })
+    this.categoryService.getAllCategories().subscribe(res => {
+      this.categories = JSON.parse(JSON.stringify(res))
+    })
   }
 }
 
