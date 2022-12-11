@@ -35,143 +35,9 @@ export class FoodsComponent implements OnInit {
   currentFoodToUpdate: number = -1
 
   // variables to fill from the DB
-  allFoods: Food[] = [
-    {
-      id: 0,
-      name: "pizza margherita",
-      category: 1,
-      price: 16.5,
-      allergies: [2, 3]
-    },
-    {
-      id: 1,
-      name: "pizza diavola",
-      category: 1,
-      price: 19.5,
-      allergies: [3]
-    },
-    {
-      id: 3,
-      name: "pizza hawaii",
-      category: 1,
-      price: 19,
-      allergies: [3]
-    },
-    {
-      id: 4,
-      name: "pizza prosciutto",
-      category: 1,
-      price: 18.5,
-      allergies: [3]
-    },
-    {
-      id: 5,
-      name: "spaghetti carbonara",
-      category: 2,
-      price: 17,
-      allergies: [3]
-    },
-    {
-      id: 6,
-      name: "fusili pomodoro",
-      category: 2,
-      price: 16,
-      allergies: [0, 2, 3, 4]
-    },
-    {
-      id: 7,
-      name: "spaghetti bolognaise",
-      category: 2,
-      price: 19,
-      allergies: [3, 4]
-    },
-    {
-      id: 9,
-      name: "steak with fries",
-      category: 3,
-      price: 22,
-      allergies: [3, 4]
-    },
-    {
-      id: 10,
-      name: "ratatouille",
-      category: 3,
-      price: 14,
-      allergies: [0, 2, 3, 4, 5]
-    },
-    {
-      id: 12,
-      name: "water",
-      category: 4,
-      price: 2,
-      allergies: [0, 2, 3, 4, 5]
-    },
-    {
-      id: 13,
-      name: "coke",
-      category: 4,
-      price: 3.5,
-      allergies: [0, 2, 3, 4, 5]
-    },
-    {
-      id: 14,
-      name: "beer",
-      category: 6,
-      price: 4.5,
-      allergies: [0, 2, 3, 4, 5]
-    },
-    {
-      id: 15,
-      name: "wine",
-      category: 6,
-      price: 9,
-      allergies: [0, 2, 3, 4, 5]
-    },
-  ]
-  categories: Category[] = [
-    {
-      id: 1,
-      name: "pizza"
-    },
-    {
-      id: 2,
-      name: "pasta"
-    },
-    {
-      id: 3,
-      name: "other foot"
-    },
-    {
-      id: 4,
-      name: "non-alcoholic drinks"
-    },
-    {
-      id: 6,
-      name: "alcoholic drinks"
-    },
-  ]
-  allergies: Allergy[] = [
-    {
-      id: 0,
-      name: "vegan"
-    },
-    {
-      id: 2,
-      name: "vegetarian"
-    },
-    {
-      id: 3,
-      name: "without nuts"
-    },
-    {
-      id: 4,
-      name: "without lactose"
-    },
-    {
-      id: 5,
-      name: "without gluten"
-    },
-  ]
+  allFoods: Food[] = []
+  categories: Category[] = []
+  allergies: Allergy[] = []
 
   // variable with the foods, that are currently displayed
   foods: Food[] = []
@@ -207,7 +73,7 @@ export class FoodsComponent implements OnInit {
     }
     this.foods = []
     for (const food of this.allFoods) {
-      let item = this.categories.find(i => i.id == food.category)
+      let item = this.categories.find(i => i.id == food.categoryID)
       if (item !== undefined && item.name === category) {
         this.foods.push(food)
       }
@@ -220,7 +86,7 @@ export class FoodsComponent implements OnInit {
     } else {
       this.selectedFood = index
 
-      const activeCategory = this.categories.find(i => i.id == this.foods[index].category)
+      const activeCategory = this.categories.find(i => i.id == this.allFoods[index].categoryID)
       if (activeCategory !== undefined) {
         this.selectedCategory = activeCategory.name
       }
@@ -257,7 +123,7 @@ export class FoodsComponent implements OnInit {
       this.name = currentFood.name
       this.price = currentFood.price
       // get the correct selected category
-      const activeCategory = this.categories.find(i => i.id == currentFood.category)
+      const activeCategory = this.categories.find(i => i.id == currentFood.categoryID)
       if (activeCategory !== undefined) {
         this.selectedCategory = activeCategory.name
       }
@@ -327,14 +193,15 @@ export class FoodsComponent implements OnInit {
   }
 
   loadData() {
-    this.foodService.getAllFoods().subscribe(res => {
-      this.foods = JSON.parse(JSON.stringify(res))
-    })
     this.allergyService.getAllAllergies().subscribe(res => {
       this.allergies = JSON.parse(JSON.stringify(res))
     })
     this.categoryService.getAllCategories().subscribe(res => {
       this.categories = JSON.parse(JSON.stringify(res))
+    })
+    this.foodService.getAllFoods().subscribe(res => {
+      this.allFoods = JSON.parse(JSON.stringify(res))
+      this.foods = this.allFoods
     })
   }
 }
@@ -343,7 +210,7 @@ interface Food {
   id: number;
   name: string;
   price: number;
-  category: number;
+  categoryID: number;
   allergies: number[];
 }
 
