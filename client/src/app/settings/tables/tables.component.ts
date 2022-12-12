@@ -26,63 +26,7 @@ export class TablesComponent implements OnInit {
   currentTableToDelete: number = -1
   currentTableToUpdate: number = -1
 
-  tables: Table[] = [
-    {
-      id: 0,
-      name: "Table 1 inside",
-      amountPeople: 4
-    },
-    {
-      id: 1,
-      name: "Table 2 inside",
-      amountPeople: 6
-    },
-    {
-      id: 3,
-      name: "Table 3 inside",
-      amountPeople: 4
-    },
-    {
-      id: 4,
-      name: "Table 4 inside",
-      amountPeople: 6
-    },
-    {
-      id: 5,
-      name: "Table 5 inside",
-      amountPeople: 2
-    },
-    {
-      id: 7,
-      name: "Table 6 inside",
-      amountPeople: 2
-    },
-    {
-      id: 8,
-      name: "Table 1 outside",
-      amountPeople: 4
-    },
-    {
-      id: 9,
-      name: "Table 2 outside",
-      amountPeople: 4
-    },
-    {
-      id: 10,
-      name: "Table 3 outside",
-      amountPeople: 6
-    },
-    {
-      id: 12,
-      name: "Table 4 outside",
-      amountPeople: 8
-    },
-    {
-      id: 13,
-      name: "Table 5 outside",
-      amountPeople: 2
-    }
-  ]
+  tables: Table[] = []
 
   constructor(private tableService: TableService) {
     // makes animation for the next opening visible again

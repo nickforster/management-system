@@ -24,28 +24,7 @@ export class AllergiesComponent implements OnInit {
   currentAllergyToDelete: number = -1
   currentAllergyToUpdate: number = -1
 
-  allergies: Allergy[] = [
-    {
-      id: 0,
-      name: "vegan"
-    },
-    {
-      id: 2,
-      name: "vegetarian"
-    },
-    {
-      id: 3,
-      name: "without nuts"
-    },
-    {
-      id: 4,
-      name: "without lactose"
-    },
-    {
-      id: 5,
-      name: "without gluten"
-    },
-  ]
+  allergies: Allergy[] = []
 
   constructor(private allergyService: AllergyService) {
     // makes animation for the next opening visible again
