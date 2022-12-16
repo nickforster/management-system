@@ -169,13 +169,13 @@ export class FoodsComponent implements OnInit {
         selectedAllergiesIds.push(this.allergies[i].id)
       }
     }
-    if (this.isNewFood) {
-      const activeCategory = this.categories.find(i => i.name == this.selectedCategory)
-      if (activeCategory !== undefined) {
+    const activeCategory = this.categories.find(i => i.name == this.selectedCategory)
+    if (activeCategory !== undefined) {
+      if (this.isNewFood) {
         this.foodService.insertFood(this.name, Number(this.price), activeCategory.id, selectedAllergiesIds)
+      } else {
+        this.foodService.updateFood(this.currentFoodToUpdate, this.name, Number(this.price), activeCategory.id, selectedAllergiesIds)
       }
-    } else {
-      this.foodService.updateFood(this.currentFoodToUpdate, this.name, Number(this.price), this.categories[Number(this.selectedCategory)].id, selectedAllergiesIds)
     }
     this.errorMessage = false
     setTimeout(() => {
