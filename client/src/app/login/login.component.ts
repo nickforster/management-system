@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {faEye, faEyeSlash, faKey, faUser} from '@fortawesome/free-solid-svg-icons';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {AuthenticationService} from "../authentication.service";
+import {AuthenticationService} from "../services/authentication.service";
 
 @Component({
   selector: 'app-login',
