@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 
@@ -10,7 +10,8 @@ export class AuthenticationService {
   API_URL = 'http://localhost:3000';
   TOKEN_KEY = 'token';
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {
+  }
 
   get token() {
     return localStorage.getItem(this.TOKEN_KEY);
@@ -21,7 +22,7 @@ export class AuthenticationService {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Cache-Control': 'no-cache',
-        'Authorization':'Bearer ' + localStorage.getItem(this.TOKEN_KEY)
+        'Authorization': 'Bearer ' + localStorage.getItem(this.TOKEN_KEY)
       })
     };
 
@@ -59,5 +60,19 @@ export class AuthenticationService {
         this.router.navigateByUrl('/app');
       }
     );
+  }
+
+  authorise() {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Cache-Control': 'no-cache',
+      'Authorization': 'Bearer ' + localStorage.getItem(this.TOKEN_KEY)
+    })
+    this.http.get(this.API_URL + '/authorise', {headers}).subscribe(
+      () => {
+      }, () => {
+        this.router.navigateByUrl('/login')
+      }
+    )
   }
 }
