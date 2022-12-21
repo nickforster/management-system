@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {faPenToSquare, faPlus, faSignature, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {AllergyService} from "../../services/allergy.service";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-allergies',
@@ -26,7 +27,7 @@ export class AllergiesComponent implements OnInit {
 
   allergies: Allergy[] = []
 
-  constructor(private allergyService: AllergyService) {
+  constructor(private allergyService: AllergyService, private authenticationService: AuthenticationService) {
     // makes animation for the next opening visible again
     let body = document.querySelector('body')
     if (body != null) {
@@ -40,6 +41,7 @@ export class AllergiesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authenticationService.authorise()
     this.loadData()
   }
 

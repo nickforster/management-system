@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {faArrowsUpDown, faPenToSquare, faPlus, faSignature, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {TableService} from "../../services/table.service";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-tables',
@@ -28,7 +29,7 @@ export class TablesComponent implements OnInit {
 
   tables: Table[] = []
 
-  constructor(private tableService: TableService) {
+  constructor(private tableService: TableService, private authenticationService: AuthenticationService) {
     // makes animation for the next opening visible again
     let body = document.querySelector('body')
     if (body != null) {
@@ -42,6 +43,7 @@ export class TablesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authenticationService.authorise()
     this.loadData()
   }
 

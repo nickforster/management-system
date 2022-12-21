@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {faPenToSquare, faPlus, faSignature, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {CategoryService} from "../../services/category.service";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-categories',
@@ -26,7 +27,7 @@ export class CategoriesComponent implements OnInit {
 
   categories: Category[] = []
 
-  constructor(private categoryService: CategoryService) {
+  constructor(private categoryService: CategoryService, private authenticationService: AuthenticationService) {
     // makes animation for the next opening visible again
     let body = document.querySelector('body')
     if (body != null) {
@@ -40,6 +41,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authenticationService.authorise()
     this.loadData()
   }
 

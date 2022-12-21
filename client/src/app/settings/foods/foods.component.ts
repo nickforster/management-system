@@ -3,6 +3,7 @@ import {faBars, faPenToSquare, faPlus, faSignature, faTag, faXmark} from '@forta
 import {FoodService} from "../../services/food.service";
 import {AllergyService} from "../../services/allergy.service";
 import {CategoryService} from "../../services/category.service";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-foods',
@@ -47,7 +48,8 @@ export class FoodsComponent implements OnInit {
   constructor(
     private foodService: FoodService,
     private allergyService: AllergyService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private authenticationService: AuthenticationService
   ) {
     // makes animation for the next opening visible again
     let body = document.querySelector('body')
@@ -62,6 +64,7 @@ export class FoodsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authenticationService.authorise()
     this.loadData()
     this.sortByChange('Sort by category')
   }
