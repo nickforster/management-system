@@ -1,0 +1,22 @@
+.container {
+  height: 100vh;
+  background-color: #ADAABF;
+  padding: 0 2rem;
+  z-index: 0;
+}
+
+#header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 1rem;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+#content {
+  display: flex;
+  padding-top: 1rem;
+}
