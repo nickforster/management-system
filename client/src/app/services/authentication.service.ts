@@ -34,7 +34,7 @@ export class AuthenticationService {
     this.http.post(this.API_URL + '/login', data, headers).subscribe(
       (res: any) => {
         localStorage.setItem(this.TOKEN_KEY, res.token);
-        this.router.navigateByUrl('/app');
+        this.router.navigateByUrl('/');
       }
     );
   }
@@ -57,7 +57,7 @@ export class AuthenticationService {
       (res: any) => {
         localStorage.setItem(this.TOKEN_KEY, res.token);
 
-        this.router.navigateByUrl('/app');
+        this.router.navigateByUrl('/');
       }
     );
   }
