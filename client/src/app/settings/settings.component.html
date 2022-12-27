@@ -1,7 +1,7 @@
 <div class="container">
   <div id="header">
     <h1>Settings</h1>
-    <fa-icon [icon]="faUser"></fa-icon>
+    <fa-icon [icon]="faHouse" routerLink="/"></fa-icon>
   </div>
   <div id="content">
     <div id="labels">
@@ -10,12 +10,14 @@
       <h2 (click)="changeSelected('foods', 1)">Foods</h2>
       <h2 (click)="changeSelected('categories', 2)">Categories</h2>
       <h2 (click)="changeSelected('allergies', 3)">Allergies</h2>
+      <h2 (click)="changeSelected('account', 4)">Account</h2>
     </div>
     <div id="components">
       <app-tables *ngIf="selected=='tables'"></app-tables>
       <app-foods *ngIf="selected=='foods'"></app-foods>
       <app-categories *ngIf="selected=='categories'"></app-categories>
       <app-allergies *ngIf="selected=='allergies'"></app-allergies>
+      <app-account *ngIf="selected=='account'"></app-account>
     </div>
   </div>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {faUser} from '@fortawesome/free-solid-svg-icons';
+import { faHouse } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-settings',
@@ -7,7 +7,7 @@ import {faUser} from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
-  faUser = faUser
+  faHouse = faHouse
   selected = 'tables'
 
   constructor() { }
