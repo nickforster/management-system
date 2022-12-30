@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../services/authentication.service";
-import { faGear } from '@fortawesome/free-solid-svg-icons';
+import {faGear} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -9,8 +9,14 @@ import { faGear } from '@fortawesome/free-solid-svg-icons';
 })
 export class HomeComponent implements OnInit {
   faGear = faGear
+  name = "User"
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService) {
+    let token = localStorage.getItem("token")
+    if (token !== null) {
+      this.name = JSON.parse(atob(token.split('.')[1])).username
+    }
+  }
 
   ngOnInit(): void {
     this.authenticationService.authorise()
