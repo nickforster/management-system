@@ -1,15 +1,30 @@
 <div id="container">
   <div class="input-container">
-    <input type="text" [(ngModel)]="username" placeholder="Username">
-    <fa-icon [icon]="faUser"></fa-icon>
+    <label for="username"><h3>Username</h3></label>
+    <div>
+      <input type="text" [(ngModel)]="user.username" id="username">
+      <fa-icon [icon]="faUser"></fa-icon>
+    </div>
   </div>
+
   <div class="input-container">
-    <input type="email" [(ngModel)]="email" placeholder="Email">
-    <fa-icon [icon]="faEnvelope"></fa-icon>
+    <label for="email"><h3>Email</h3></label>
+    <div>
+      <input type="email" [(ngModel)]="user.email" id="email">
+      <fa-icon [icon]="faEnvelope"></fa-icon>
+    </div>
   </div>
+
   <div class="input-container">
-    <input id="password" type="password" [(ngModel)]="password" placeholder="Password">
-    <fa-icon [icon]="faKey"></fa-icon>
-    <span (click)="changeVisibility()" *ngIf="password"><fa-icon [icon]="faEye"></fa-icon></span>
+    <label for="password"><h3>Password</h3></label>
+    <div>
+      <input type="password" [(ngModel)]="user.password" id="password" placeholder="Enter new password">
+      <fa-icon [icon]="faKey"></fa-icon>
+      <span (click)="changeVisibility()" *ngIf="user.password"><fa-icon [icon]="faEye" id="eye"></fa-icon></span>
+    </div>
+  </div>
+  <div id="button-container">
+    <button (click)="updateUser()">save</button>
+    <button (click)="loadData()">reset</button>
   </div>
 </div>

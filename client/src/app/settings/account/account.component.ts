@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {faEye, faEyeSlash, faKey, faUser, faEnvelope} from '@fortawesome/free-solid-svg-icons';
+import {Component, OnInit} from '@angular/core';
+import {faEnvelope, faEye, faEyeSlash, faKey, faUser} from '@fortawesome/free-solid-svg-icons';
 import {AuthenticationService} from "../../services/authentication.service";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-account',
@@ -9,19 +10,18 @@ import {AuthenticationService} from "../../services/authentication.service";
 })
 export class AccountComponent implements OnInit {
   faEye = faEye
-  faEyeSlash = faEyeSlash
   faKey = faKey
   faUser = faUser
   faEnvelope = faEnvelope
 
-  username = ""
-  password = ""
-  email = ""
+  user: User = {username: "username", email: "email", password: "password"}
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private userService: UserService, private authenticationService: AuthenticationService) {
+  }
 
   ngOnInit(): void {
     this.authenticationService.authorise()
+    this.loadData()
   }
 
   changeVisibility() {
@@ -36,4 +36,20 @@ export class AccountComponent implements OnInit {
       document.getElementById("password").type = "password"
     }
   }
+
+  updateUser() {
+    this.userService.updateUser(this.user.username, this.user.email, this.user.password)
+  }
+
+  loadData() {
+    this.userService.getUser().subscribe(res => {
+      this.user = JSON.parse(JSON.stringify(res))
+    })
+  }
+}
+
+interface User {
+  username: string;
+  email: string;
+  password: string;
 }
