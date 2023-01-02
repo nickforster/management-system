@@ -25,6 +25,8 @@ func main() {
 	mux.HandleFunc("/login", login)
 	mux.HandleFunc("/register", register)
 	mux.HandleFunc("/authorise", authorise)
+	mux.HandleFunc("/getUser", getUser)
+	mux.HandleFunc("/updateUser", updateUser)
 	mux.HandleFunc("/getCategories", getCategories)
 	mux.HandleFunc("/insertCategory", insertCategory)
 	mux.HandleFunc("/updateCategory", updateCategory)
@@ -102,6 +104,50 @@ func authorise(w http.ResponseWriter, r *http.Request) {
 	} else {
 		http.Error(w, "Not logged in!", http.StatusUnauthorized)
 	}
+}
+
+func getUser(w http.ResponseWriter, r *http.Request) {
+	user := readUserBody(w, r, "Getting user failed")
+	user, err = getUserById(user.Id)
+
+	if err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	} else {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusCreated)
+		json.NewEncoder(w).Encode(user)
+	}
+}
+
+func updateUser(w http.ResponseWriter, r *http.Request) {
+	var errorMessage = "User could not be updated"
+	data := readUserBody(w, r, errorMessage)
+
+	user, _ := getUserByEmail(data.Email)
+	if user.Username != "" { // user from database where email = input --> should not exist
+		http.Error(w, "Update failed, user with this E-Mail already exists", http.StatusConflict)
+		return
+	}
+
+	_, err = mail.ParseAddress(data.Email)
+	if err != nil { // error if email is not valid
+		http.Error(w, "Update failed, invalid E-Mail", http.StatusBadRequest)
+		return
+	}
+
+	user, _ = getUserByUsername(data.Username)
+	if user.Email != "" { // user from database with username = input --> should not exist
+		http.Error(w, "Update failed, user with this Username already exists", http.StatusConflict)
+		return
+	}
+
+	err := updateUserInDB(data.Id, data.Username, data.Email, data.Password)
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(200)
+	}
+
 }
 
 func getCategories(w http.ResponseWriter, r *http.Request) {

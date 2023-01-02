@@ -98,3 +98,51 @@ func getUserByEmail(email string) (User, error) {
 		return users[0], err
 	}
 }
+
+func getUserById(id int) (User, error) {
+	var users []User
+	var u User
+	rows, err := db.Query("SELECT * FROM users WHERE user_id = ?;", id)
+	defer rows.Close()
+
+	if err != nil {
+		return users[0], err
+	}
+
+	for rows.Next() {
+		var user User
+		if err := rows.Scan(&user.Id, &user.Username, &user.Password, &user.Email); err != nil {
+			return u, err
+		} else {
+			users = append(users, user)
+		}
+	}
+	if users == nil {
+		return u, err
+	} else {
+		users[0].Password = ""
+		return users[0], err
+	}
+}
+
+func updateUserInDB(id int, username string, email string, password string) error {
+	if password == "" {
+		rows, err := db.Query("UPDATE users set username=?, email=? WHERE user_id=?", username, email, id)
+		err = rows.Close()
+		if err != nil {
+			return err
+		}
+		return err
+	} else {
+		password, err = hashPassword(password)
+		if err != nil {
+			return err
+		}
+		rows, err := db.Query("UPDATE users set username=?, email=?, password=? WHERE user_id=?", username, email, password, id)
+		err = rows.Close()
+		if err != nil {
+			return err
+		}
+		return err
+	}
+}
