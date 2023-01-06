@@ -5,6 +5,7 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 	"io/ioutil"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -125,4 +126,14 @@ func generateToken(id int, username string, w http.ResponseWriter) bool {
 		w.Write(json)
 		return true
 	}
+}
+
+func isAuthorised(r *http.Request) bool {
+	reqToken := r.Header.Get("Authorization")
+	authFields := strings.Fields(reqToken)
+	token, err := jwt.Parse(authFields[1], func(t *jwt.Token) (interface{}, error) {
+		return jwtKey, nil
+	})
+
+	return err == nil && token.Valid
 }
