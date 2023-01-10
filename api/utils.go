@@ -131,6 +131,9 @@ func generateToken(id int, username string, w http.ResponseWriter) bool {
 func isAuthorised(r *http.Request) bool {
 	reqToken := r.Header.Get("Authorization")
 	authFields := strings.Fields(reqToken)
+	if len(authFields) == 0 {
+		return false
+	}
 	token, err := jwt.Parse(authFields[1], func(t *jwt.Token) (interface{}, error) {
 		return jwtKey, nil
 	})
