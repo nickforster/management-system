@@ -14,7 +14,7 @@ export class AccountComponent implements OnInit {
   faUser = faUser
   faEnvelope = faEnvelope
 
-  user: User = {username: "username", email: "email", password: "password"}
+  user: User = {username: "username", email: "email", password: ""}
 
   constructor(private userService: UserService, private authenticationService: AuthenticationService) {
   }
