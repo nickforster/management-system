@@ -107,6 +107,11 @@ func authorise(w http.ResponseWriter, r *http.Request) {
 }
 
 func getUser(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
+
 	user := readUserBody(w, r, "Getting user failed")
 	user, err = getUserById(user.Id)
 
@@ -120,6 +125,11 @@ func getUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func updateUser(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
+
 	var errorMessage = "User could not be updated"
 	data := readUserBody(w, r, errorMessage)
 
@@ -151,6 +161,11 @@ func updateUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func getCategories(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
+
 	var categories []Category
 	data := readCategoryBody(w, r, "Category could not be added")
 
@@ -165,6 +180,11 @@ func getCategories(w http.ResponseWriter, r *http.Request) {
 }
 
 func insertCategory(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
+
 	var errorMessage = "Category could not be added"
 	data := readCategoryBody(w, r, errorMessage)
 	err := insertCategoryIntoDB(data.Name, data.UserID)
@@ -176,6 +196,11 @@ func insertCategory(w http.ResponseWriter, r *http.Request) {
 }
 
 func updateCategory(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
+
 	var errorMessage = "Category could not be updated"
 	data := readCategoryBody(w, r, errorMessage)
 	err := updateCategoryInDB(data.Id, data.Name)
@@ -187,6 +212,11 @@ func updateCategory(w http.ResponseWriter, r *http.Request) {
 }
 
 func deleteCategory(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
+
 	var errorMessage = "Category could not be deleted"
 	data := readCategoryBody(w, r, errorMessage)
 	err := deleteCategoryInDB(data.Id)
@@ -198,6 +228,11 @@ func deleteCategory(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllergies(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
+
 	var allergies []Allergy
 	data := readCategoryBody(w, r, "Category could not be added")
 
@@ -212,6 +247,11 @@ func getAllergies(w http.ResponseWriter, r *http.Request) {
 }
 
 func insertAllergy(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
+
 	var errorMessage = "Allergy could not be added"
 	data := readAllergyBody(w, r, errorMessage)
 	err := insertAllergyIntoDB(data.Name, data.UserID)
@@ -223,6 +263,11 @@ func insertAllergy(w http.ResponseWriter, r *http.Request) {
 }
 
 func updateAllergy(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
+
 	var errorMessage = "Allergy could not be updated"
 	data := readAllergyBody(w, r, errorMessage)
 	err := updateAllergyInDB(data.Id, data.Name)
@@ -234,6 +279,11 @@ func updateAllergy(w http.ResponseWriter, r *http.Request) {
 }
 
 func deleteAllergy(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
+
 	var errorMessage = "Allergy could not be deleted"
 	data := readAllergyBody(w, r, errorMessage)
 	err := deleteAllergyInDB(data.Id)
@@ -245,6 +295,11 @@ func deleteAllergy(w http.ResponseWriter, r *http.Request) {
 }
 
 func getTables(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
+
 	var tables []Table
 	data := readTableBody(w, r, "Table could not be added")
 
@@ -259,6 +314,11 @@ func getTables(w http.ResponseWriter, r *http.Request) {
 }
 
 func insertTable(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
+
 	var errorMessage = "Table could not be added"
 	data := readTableBody(w, r, errorMessage)
 	err := insertTableIntoDB(data.Name, data.AmountPeople, data.UserID)
@@ -270,6 +330,11 @@ func insertTable(w http.ResponseWriter, r *http.Request) {
 }
 
 func updateTable(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
+
 	var errorMessage = "Table could not be updated"
 	data := readTableBody(w, r, errorMessage)
 	err := updateTableInDB(data.Id, data.Name, data.AmountPeople)
@@ -281,6 +346,11 @@ func updateTable(w http.ResponseWriter, r *http.Request) {
 }
 
 func deleteTable(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
+
 	var errorMessage = "Table could not be deleted"
 	data := readTableBody(w, r, errorMessage)
 	err := deleteTableInDB(data.Id)
@@ -292,6 +362,11 @@ func deleteTable(w http.ResponseWriter, r *http.Request) {
 }
 
 func getFoods(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
+
 	var foods []Food
 	data := readFoodBody(w, r, "Food could not be added")
 
@@ -306,6 +381,11 @@ func getFoods(w http.ResponseWriter, r *http.Request) {
 }
 
 func insertFood(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
+
 	var errorMessage = "Food could not be added"
 	data := readFoodBody(w, r, errorMessage)
 	err := insertFoodIntoDB(data.Name, data.Price, data.CategoryID, data.Allergies, data.UserID)
@@ -317,6 +397,11 @@ func insertFood(w http.ResponseWriter, r *http.Request) {
 }
 
 func updateFood(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
+
 	var errorMessage = "Food could not be updated"
 	data := readFoodBody(w, r, errorMessage)
 	err := updateFoodInDB(data.Id, data.Name, data.Price, data.CategoryID, data.Allergies)
@@ -328,6 +413,11 @@ func updateFood(w http.ResponseWriter, r *http.Request) {
 }
 
 func deleteFood(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
+
 	var errorMessage = "Food could not be deleted"
 	data := readFoodBody(w, r, errorMessage)
 	err := deleteFoodInDB(data.Id)
