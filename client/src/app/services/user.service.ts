@@ -13,6 +13,7 @@ export class UserService {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
       'Cache-Control': 'no-cache',
+      'Authorization': 'Bearer ' + localStorage.getItem(this.TOKEN_KEY)
     })
   };
 
