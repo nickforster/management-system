@@ -39,6 +39,12 @@ export class AuthenticationService {
     );
   }
 
+  logout() {
+    this.router.navigateByUrl('/').then(r => {
+      localStorage.removeItem(this.TOKEN_KEY)
+    });
+  }
+
   register(username: string, email: string, password: string) {
     const headers = {
       headers: new HttpHeaders({
