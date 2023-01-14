@@ -31,12 +31,7 @@ export class AuthenticationService {
       password: password
     };
 
-    this.http.post(this.API_URL + '/login', data, headers).subscribe(
-      (res: any) => {
-        localStorage.setItem(this.TOKEN_KEY, res.token);
-        this.router.navigateByUrl('/');
-      }
-    );
+    return this.http.post(this.API_URL + '/login', data, headers)
   }
 
   logout() {

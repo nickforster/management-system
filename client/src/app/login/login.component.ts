@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {faEye, faEyeSlash, faKey, faUser} from '@fortawesome/free-solid-svg-icons';
+import {Component, OnInit} from '@angular/core';
+import {faEye, faEyeSlash, faKey, faSpinner, faUser} from '@fortawesome/free-solid-svg-icons';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../services/authentication.service";
@@ -13,15 +13,23 @@ export class LoginComponent implements OnInit {
   username = ''
   password = ''
   object: any
+  loggingIn = false
+  error = ''
 
   faUser = faUser;
   faKey = faKey;
   faEye = faEye;
+  faSpinner = faSpinner
 
   constructor(private httpClient: HttpClient,
               public router: Router,
               private authenticationService: AuthenticationService
   ) {
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        this.login()
+      }
+    })
   }
 
   ngOnInit(): void {
@@ -29,7 +37,17 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.username != '' && this.password != '') {
-      this.authenticationService.login(this.username, this.password)
+      this.loggingIn = true
+      this.authenticationService.login(this.username, this.password).subscribe(
+        (res: any) => {
+          localStorage.setItem('token', res.token);
+          this.router.navigateByUrl('/');
+        }, (err) => {
+          this.error = err.error
+          this.loggingIn = false
+        }
+      )
+
     }
   }
 

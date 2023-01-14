@@ -9,7 +9,13 @@
     <fa-icon [icon]="faKey"></fa-icon>
     <span (click)="changeVisibility()" *ngIf="password"><fa-icon [icon]="faEye"></fa-icon></span>
   </div>
-  <button (click)="login()" >Login</button>
+  <div *ngIf="error" class="error">{{error}}</div>
+  <button *ngIf="!loggingIn" (click)="login()">Login</button>
+  <button *ngIf="loggingIn">
+    <div class="rotate">
+      <fa-icon [icon]="faSpinner" id="spinner"></fa-icon>
+    </div>
+  </button>
   <div>
     <a routerLink="/forgotPassword">forgot password?</a>
   </div>

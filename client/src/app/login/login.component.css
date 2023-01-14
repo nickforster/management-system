@@ -66,11 +66,30 @@ button {
   color: white;
   transform: scale(1);
   transition: transform 200ms ease-in-out;
+  width: 5rem;
+  height: 1.5rem;
 }
 
 button:hover {
   transform: scale(1.1);
   transition: transform 200ms ease-in-out;
+}
+
+#spinner {
+  padding: 0;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: rotate 3s linear infinite !important;
 }
 
 a {
@@ -90,4 +109,8 @@ span {
   justify-content: flex-start;
   height: 100%;
   right: .75rem;
+}
+
+.error {
+  color: #8d0101;
 }
