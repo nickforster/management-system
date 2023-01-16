@@ -14,6 +14,11 @@
     <fa-icon [icon]="faKey"></fa-icon>
     <span (click)="changeVisibility()" *ngIf="password"><fa-icon [icon]="faEye"></fa-icon></span>
   </div>
-  <button (click)="register()">Register</button>
-  <p *ngIf="error">This E-Mail is already registered. Please use a different E-Mail address or <a routerLink="/login">login</a></p>
+  <div *ngIf="error" class="error">{{error}}</div>
+  <button *ngIf="!registering" (click)="register()">Register</button>
+  <button *ngIf="registering">
+    <div class="rotate">
+      <fa-icon [icon]="faSpinner" id="spinner"></fa-icon>
+    </div>
+  </button>
 </div>
