@@ -58,7 +58,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 	data := readUserBody(w, r, "Login failed!")
 
 	if !authoriseUser(data.Username, data.Password, w) {
-		http.Error(w, "Login failed!", http.StatusUnauthorized)
+		http.Error(w, "Username or password is wrong", http.StatusUnauthorized)
 	}
 }
 
