@@ -22,4 +22,8 @@ export class HomeComponent implements OnInit {
     this.authenticationService.authorise()
   }
 
+  logout() {
+    this.authenticationService.logout()
+  }
+
 }
