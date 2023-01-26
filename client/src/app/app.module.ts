@@ -16,6 +16,8 @@ import { AllergiesComponent } from './settings/allergies/allergies.component';
 import { CategoriesComponent } from './settings/categories/categories.component';
 import { TablesComponent } from './settings/tables/tables.component';
 import { AccountComponent } from './settings/account/account.component';
+import { NoticeComponent } from './legal/notice/notice.component';
+import { PrivacyComponent } from './legal/privacy/privacy.component';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import { AccountComponent } from './settings/account/account.component';
     AllergiesComponent,
     CategoriesComponent,
     TablesComponent,
-    AccountComponent
+    AccountComponent,
+    NoticeComponent,
+    PrivacyComponent
   ],
   imports: [
     BrowserModule,
