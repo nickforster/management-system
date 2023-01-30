@@ -18,6 +18,7 @@ import { TablesComponent } from './settings/tables/tables.component';
 import { AccountComponent } from './settings/account/account.component';
 import { NoticeComponent } from './legal/notice/notice.component';
 import { PrivacyComponent } from './legal/privacy/privacy.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { PrivacyComponent } from './legal/privacy/privacy.component';
     TablesComponent,
     AccountComponent,
     NoticeComponent,
-    PrivacyComponent
+    PrivacyComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
