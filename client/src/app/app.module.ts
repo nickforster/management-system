@@ -19,6 +19,8 @@ import { AccountComponent } from './settings/account/account.component';
 import { NoticeComponent } from './legal/notice/notice.component';
 import { PrivacyComponent } from './legal/privacy/privacy.component';
 import { FooterComponent } from './footer/footer.component';
+import { SupportComponent } from './infos/support/support.component';
+import { ContactComponent } from './infos/contact/contact.component';
 
 
 @NgModule({
@@ -35,7 +37,9 @@ import { FooterComponent } from './footer/footer.component';
     AccountComponent,
     NoticeComponent,
     PrivacyComponent,
-    FooterComponent
+    FooterComponent,
+    SupportComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
