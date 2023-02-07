@@ -1,1 +1,45 @@
-<p>contact works!</p>
+<div id="container">
+  <header id="header">
+    <h1>Contact</h1>
+    <fa-icon [icon]="faHouse" routerLink="/"></fa-icon>
+  </header>
+  <main id="content">
+    <div class="input-container">
+      <label for="name"><h3>Name</h3></label>
+      <div>
+        <input type="text" [(ngModel)]="mail.username" id="name">
+        <fa-icon [icon]="faSignature" id="input-fa-icon"></fa-icon>
+      </div>
+    </div>
+
+    <div class="input-container">
+      <label for="email"><h3>Email</h3></label>
+      <div>
+        <input type="email" [(ngModel)]="mail.email" id="email">
+        <fa-icon [icon]="faEnvelope" id="input-fa-icon"></fa-icon>
+      </div>
+    </div>
+
+    <div class="input-container">
+      <label for="subject"><h3>Subject</h3></label>
+      <div>
+        <input type="text" [(ngModel)]="mail.subject" id="subject">
+        <fa-icon [icon]="faQuoteRight" id="input-fa-icon"></fa-icon>
+      </div>
+    </div>
+
+    <div class="input-container">
+      <label for="message"><h3>Message</h3></label>
+      <div>
+        <textarea type="text" [(ngModel)]="mail.message" id="message"></textarea>
+        <fa-icon [icon]="faMessage" id="input-fa-icon"></fa-icon>
+      </div>
+    </div>
+
+    <div id="button-container">
+      <button (click)="send()">send</button>
+      <button (click)="clear()">clear</button>
+    </div>
+  </main>
+</div>
+<app-footer></app-footer>
