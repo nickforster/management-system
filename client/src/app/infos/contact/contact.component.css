@@ -13,9 +13,16 @@
 }
 
 label {
+  position: relative;
   width: 8rem;
   display: flex;
   align-items: center;
+}
+
+#message-header {
+  padding-top: .2rem;
+  position: absolute;
+  top: 0;
 }
 
 input {
@@ -26,11 +33,22 @@ input {
   width: 10rem;
 }
 
-input:focus {
+textarea {
+  padding: .5rem 2.5rem;
+  background-color: #eaeaea;
+  border: none;
+  border-radius: .25rem;
+  width: 10rem;
+  min-height: 17px;
+  max-height: 250px;
+  resize: none;
+}
+
+input:focus, textarea:focus {
   outline: none;
 }
 
-input:focus ~ #input-fa-icon {
+input:focus ~ #input-fa-icon, textarea:focus ~ #input-fa-icon  {
   color: #5b00af;
   animation: blob 400ms linear;
 }
@@ -52,6 +70,17 @@ input::placeholder {
   height: 100%;
   font-size: 1rem;
 }
+
+textarea ~ #input-fa-icon {
+  height: auto !important;
+  top: .6rem;
+}
+
+/*
+textarea:not(:valid):not(:focus) {
+  height: 17px !important;
+}
+ */
 
 @keyframes blob {
   0% {
