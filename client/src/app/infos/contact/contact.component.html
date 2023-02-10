@@ -7,7 +7,7 @@
     <div class="input-container">
       <label for="name"><h3>Name</h3></label>
       <div>
-        <input type="text" [(ngModel)]="mail.username" id="name" required>
+        <input type="text" [(ngModel)]="mail.username" id="name">
         <fa-icon [icon]="faSignature" id="input-fa-icon"></fa-icon>
       </div>
     </div>
@@ -15,7 +15,7 @@
     <div class="input-container">
       <label for="email"><h3>Email</h3></label>
       <div>
-        <input type="email" [(ngModel)]="mail.email" id="email" required>
+        <input type="email" [(ngModel)]="mail.email" id="email">
         <fa-icon [icon]="faEnvelope" id="input-fa-icon"></fa-icon>
       </div>
     </div>
@@ -23,7 +23,7 @@
     <div class="input-container">
       <label for="subject"><h3>Subject</h3></label>
       <div>
-        <input type="text" [(ngModel)]="mail.subject" id="subject" required>
+        <input type="text" [(ngModel)]="mail.subject" id="subject">
         <fa-icon [icon]="faQuoteRight" id="input-fa-icon"></fa-icon>
       </div>
     </div>
@@ -31,11 +31,12 @@
     <div class="input-container">
       <label for="message"><h3 id="message-header">Message</h3></label>
       <div>
-        <textarea type="text" [(ngModel)]="mail.message" id="message" autosize required></textarea>
+        <textarea type="text" [(ngModel)]="mail.message" id="message" autosize></textarea>
         <fa-icon [icon]="faMessage" id="input-fa-icon"></fa-icon>
       </div>
     </div>
-
+    <div *ngIf="error" class="error">{{error}}</div>
+    <div *ngIf="success" class="success">{{success}}</div>
     <div id="button-container">
       <button (click)="send()">send</button>
       <button (click)="clear()">clear</button>

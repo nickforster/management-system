@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {faHouse, faSignature, faEnvelope, faQuoteRight, faMessage} from '@fortawesome/free-solid-svg-icons';
+import {Component, OnInit} from '@angular/core';
+import {faEnvelope, faHouse, faMessage, faQuoteRight, faSignature} from '@fortawesome/free-solid-svg-icons';
 import {AuthenticationService} from "../../services/authentication.service";
 import {UserService} from "../../services/user.service";
+import {ContactService} from "../../services/contact.service";
 
 @Component({
   selector: 'app-contact',
@@ -17,7 +18,10 @@ export class ContactComponent implements OnInit {
 
   mail: Mail = {username: "", email: "", subject: "", message: ""}
 
-  constructor(private userService: UserService, private authenticationService: AuthenticationService) {
+  error = ''
+  success = ''
+
+  constructor(private userService: UserService, private authenticationService: AuthenticationService, private contactService: ContactService) {
   }
 
   ngOnInit(): void {
@@ -31,6 +35,7 @@ export class ContactComponent implements OnInit {
 
   clear() {
     this.mail = {username: "", email: "", subject: "", message: ""}
+    this.error = ""
   }
 
   loadData() {
