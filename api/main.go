@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"net/mail"
+	"net/smtp"
 	"strings"
 )
 
@@ -43,6 +44,7 @@ func main() {
 	mux.HandleFunc("/insertFood", insertFood)
 	mux.HandleFunc("/updateFood", updateFood)
 	mux.HandleFunc("/deleteFood", deleteFood)
+	mux.HandleFunc("/sendMail", sendMail)
 
 	handler := cors.AllowAll().Handler(mux)
 
@@ -421,6 +423,27 @@ func deleteFood(w http.ResponseWriter, r *http.Request) {
 	var errorMessage = "Food could not be deleted"
 	data := readFoodBody(w, r, errorMessage)
 	err := deleteFoodInDB(data.Id)
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(200)
+	}
+}
+
+func sendMail(w http.ResponseWriter, r *http.Request) {
+	var errorMessage = "Mail could not be sent"
+	data := readMailBody(w, r, errorMessage)
+
+	to := []string{data.To}
+	message := []byte(data.Message)
+
+	password := "password"
+	smtpHost := "smtp.gmail.com"
+	smtpPort := "587" // or 465
+
+	auth := smtp.PlainAuth("", data.From, password, smtpHost)
+	err := smtp.SendMail(smtpHost+":"+smtpPort, auth, data.From, to, message)
+
 	if err != nil {
 		http.Error(w, errorMessage, http.StatusInternalServerError)
 	} else {
