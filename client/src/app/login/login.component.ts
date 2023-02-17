@@ -26,7 +26,8 @@ export class LoginComponent implements OnInit {
               private authenticationService: AuthenticationService
   ) {
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
+      let url = window.location.href
+      if (e.key === 'Enter' && (url.endsWith("login") || url.endsWith("register"))) {
         this.login()
       }
     })
