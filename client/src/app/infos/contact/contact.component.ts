@@ -57,7 +57,8 @@ export class ContactComponent implements OnInit {
 
   loadData() {
     this.userService.getUser().subscribe(res => {
-      this.mail = JSON.parse(JSON.stringify(res))
+      this.mail.name = JSON.parse(JSON.stringify(res)).username
+      this.mail.from = JSON.parse(JSON.stringify(res)).email
       this.mail.name = this.mail.name.charAt(0).toUpperCase() + this.mail.name.slice(1)
     })
   }
