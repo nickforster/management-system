@@ -1,0 +1,20 @@
+#content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding-top: 4rem !important;
+}
+
+h3 {
+  padding-bottom: 1rem;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
