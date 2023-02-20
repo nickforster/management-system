@@ -1,9 +1,19 @@
 <div class="container">
   <header id="header">
     <h1>Hello {{name}}</h1>
-    <fa-icon [icon]="faGear" routerLink="/settings"></fa-icon>
+    <fa-icon id="settings-icon" [icon]="faGear" routerLink="/settings"></fa-icon>
   </header>
   <main id="content">
+    <div *ngFor="let table of tables; let i = index" class="table-container">
+      <h3>{{table.name}}</h3>
+      <div>
+        <fa-icon [icon]="faPlay" *ngIf="!active[i]"></fa-icon>
+        <fa-icon [icon]="faClockRotateLeft" *ngIf="!active[i]"></fa-icon>
+        <fa-icon [icon]="faPlus" *ngIf="active[i]"></fa-icon>
+        <fa-icon [icon]="faPenToSquare" *ngIf="active[i]"></fa-icon>
+        <fa-icon [icon]="faMoneyBill" *ngIf="active[i]"></fa-icon>
+      </div>
+    </div>
   </main>
 </div>
 <app-footer></app-footer>
