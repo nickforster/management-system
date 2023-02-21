@@ -8,6 +8,7 @@ import {NoticeComponent} from "./legal/notice/notice.component";
 import {PrivacyComponent} from "./legal/privacy/privacy.component";
 import {SupportComponent} from "./infos/support/support.component";
 import {ContactComponent} from "./infos/contact/contact.component";
+import {LogsComponent} from "./logs/logs.component";
 
 const routes: Routes = [
   { path: 'support', component: SupportComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'dataPrivacy', component: PrivacyComponent},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'logs', component: LogsComponent},
   { path: 'settings', component: SettingsComponent },
   { path: '', component: HomeComponent },
 ];

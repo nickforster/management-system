@@ -22,6 +22,7 @@ import { PrivacyComponent } from './legal/privacy/privacy.component';
 import { FooterComponent } from './footer/footer.component';
 import { SupportComponent } from './infos/support/support.component';
 import { ContactComponent } from './infos/contact/contact.component';
+import { LogsComponent } from './logs/logs.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { ContactComponent } from './infos/contact/contact.component';
     PrivacyComponent,
     FooterComponent,
     SupportComponent,
-    ContactComponent
+    ContactComponent,
+    LogsComponent
   ],
   imports: [
     BrowserModule,
