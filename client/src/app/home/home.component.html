@@ -7,11 +7,11 @@
     <div *ngFor="let table of tables; let i = index" class="table-container">
       <h3>{{table.name}}</h3>
       <div>
-        <fa-icon [icon]="faPlay" *ngIf="!active[i]"></fa-icon>
-        <fa-icon [icon]="faClockRotateLeft" *ngIf="!active[i]"></fa-icon>
-        <fa-icon [icon]="faPlus" *ngIf="active[i]"></fa-icon>
-        <fa-icon [icon]="faPenToSquare" *ngIf="active[i]"></fa-icon>
-        <fa-icon [icon]="faMoneyBill" *ngIf="active[i]"></fa-icon>
+        <fa-icon [icon]="faPlay" *ngIf="!active[i]" (click)="start(i)"></fa-icon>
+        <fa-icon [icon]="faClockRotateLeft" *ngIf="!active[i]" (click)="history(i)"></fa-icon>
+        <fa-icon [icon]="faPlus" *ngIf="active[i]" (click)="add(i)"></fa-icon>
+        <fa-icon [icon]="faPenToSquare" *ngIf="active[i]" (click)="edit(i)"></fa-icon>
+        <fa-icon [icon]="faMoneyBill" *ngIf="active[i]" (click)="bill(i)"></fa-icon>
       </div>
     </div>
   </main>

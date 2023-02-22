@@ -22,6 +22,11 @@ fa-icon {
 }
 
 fa-icon:hover {
+  color: #5b00af;
+}
+
+#settings-icon:hover {
+  color: black;
   animation: blob 400ms linear;
 }
 
