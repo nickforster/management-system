@@ -52,3 +52,20 @@ CREATE TABLE foods (
     FOREIGN KEY (user_id) REFERENCES users(user_id),
     FOREIGN KEY (category_id) REFERENCES categories(category_id)
 );
+
+CREATE TABLE orders (
+    order_id INT AUTO_INCREMENT,
+    table_id INT NOT NULL,
+    complete BOOLEAN NOT NULL DEFAULT FALSE,
+    last_update DATETIME NOT NULL,
+    PRIMARY KEY (order_id),
+    FOREIGN KEY (table_id) REFERENCES tables(table_id)
+);
+
+CREATE TABLE order_food (
+    food_id INT NOT NULL,
+    order_id INT NOT NULL,
+    CONSTRAINT order_foodPK PRIMARY KEY (food_id, order_id),
+    FOREIGN KEY (food_id) REFERENCES foods(food_id),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id)
+);
