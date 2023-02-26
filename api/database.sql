@@ -63,9 +63,10 @@ CREATE TABLE orders (
 );
 
 CREATE TABLE order_food (
+    order_food_id INT NOT NULL AUTO_INCREMENT,
     food_id INT NOT NULL,
     order_id INT NOT NULL,
-    CONSTRAINT order_foodPK PRIMARY KEY (food_id, order_id),
+    PRIMARY KEY (order_food_id),
     FOREIGN KEY (food_id) REFERENCES foods(food_id),
     FOREIGN KEY (order_id) REFERENCES orders(order_id)
 );
