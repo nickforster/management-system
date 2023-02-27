@@ -46,26 +46,22 @@ func getAllActiveOrders(userID int) ([]Order, error) {
 	return orders, err
 }
 
-func createOrderInDB(tableID int, complete bool, userID int) {
+func getOrdersOfTable(tableID int) ([]Order, error) {
+	var orders []Order
+	rows, err := db.Query("SELECT order_id, table_id, complete FROM orders WHERE table_id=?", tableID)
+	if err != nil {
+		return orders, err
+	}
+	defer rows.Close()
 
-}
+	for rows.Next() {
+		var order Order
+		if err := rows.Scan(&order.Id, &order.TableID, &order.Complete); err != nil {
+			return orders, err
+		} else {
+			orders = append(orders, order)
+		}
+	}
 
-func completeOrderInDB(id int) {
-
-}
-
-func changeTableOfOrderInDB(id int, tableID int) {
-
-}
-
-func deleteOrderInDB(id int) {
-
-}
-
-func addFoodToOrderInDB(id int, foodID int) {
-
-}
-
-func removeFoodFromOrderInDB(id int, foodID int) {
-
+	return orders, err
 }
