@@ -65,3 +65,12 @@ func getOrdersOfTable(tableID int) ([]Order, error) {
 
 	return orders, err
 }
+func createOrderInDB(tableID int, complete bool) error {
+	insert, err := db.Query("INSERT INTO orders (table_id, complete, last_update) VALUES (?, ?, NOW());", tableID, complete)
+	err = insert.Close()
+	if err != nil {
+		return err
+	}
+
+	return err
+}
