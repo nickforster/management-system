@@ -83,3 +83,12 @@ func completeOrderInDB(id int) error {
 	}
 	return err
 }
+
+func changeTableOfOrderInDB(id int, tableID int) error {
+	rows, err := db.Query("UPDATE orders set table_id=? WHERE order_id=?;", tableID, id)
+	err = rows.Close()
+	if err != nil {
+		return err
+	}
+	return err
+}
