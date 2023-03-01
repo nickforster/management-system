@@ -74,3 +74,12 @@ func createOrderInDB(tableID int, complete bool) error {
 
 	return err
 }
+
+func completeOrderInDB(id int) error {
+	rows, err := db.Query("UPDATE orders set complete=true WHERE order_id=?;", id)
+	err = rows.Close()
+	if err != nil {
+		return err
+	}
+	return err
+}
