@@ -92,3 +92,13 @@ func changeTableOfOrderInDB(id int, tableID int) error {
 	}
 	return err
 }
+
+func deleteOrderInDB(id int) error {
+	rows, err := db.Query("DELETE FROM orders WHERE order_id=?", id)
+	err = rows.Close()
+	if err != nil {
+		return err
+	}
+
+	return err
+}
