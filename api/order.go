@@ -102,3 +102,13 @@ func deleteOrderInDB(id int) error {
 
 	return err
 }
+
+func addFoodToOrderInDB(id int, foodID int) error {
+	insert, err := db.Query("INSERT INTO order_food (order_id, food_id) VALUES (?, ?);", id, foodID)
+	err = insert.Close()
+	if err != nil {
+		return err
+	}
+
+	return err
+}
