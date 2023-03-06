@@ -45,6 +45,15 @@ func main() {
 	mux.HandleFunc("/updateFood", updateFood)
 	mux.HandleFunc("/deleteFood", deleteFood)
 	mux.HandleFunc("/sendMail", sendMail)
+	mux.HandleFunc("/getOrders", getOrders)
+	mux.HandleFunc("/getActiveOrders", getActiveOrders)
+	mux.HandleFunc("/getTableOrders", getTableOrders)
+	mux.HandleFunc("/createOrder", createOrder)
+	mux.HandleFunc("/completeOrder", completeOrder)
+	mux.HandleFunc("/changeTableOfOrder", changeTableOfOrder)
+	mux.HandleFunc("/deleteOrder", deleteOrder)
+	mux.HandleFunc("/addFoodToOrder", addFoodToOrder)
+	mux.HandleFunc("/removeFoodFromOrder", removeFoodFromOrder)
 
 	handler := cors.AllowAll().Handler(mux)
 
@@ -449,4 +458,40 @@ func sendMail(w http.ResponseWriter, r *http.Request) {
 	} else {
 		w.WriteHeader(200)
 	}
+}
+
+func getOrders(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func getActiveOrders(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func getTableOrders(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func createOrder(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func completeOrder(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func changeTableOfOrder(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func deleteOrder(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func addFoodToOrder(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func removeFoodFromOrder(w http.ResponseWriter, r *http.Request) {
+
 }
