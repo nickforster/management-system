@@ -114,7 +114,7 @@ func getUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user := readUserBody(w, r, "Getting user failed")
+	user := readUserBody(w, r, "Could not identify sent Parameters")
 	user, err = getUserById(user.Id)
 
 	if err != nil {
@@ -169,7 +169,7 @@ func getCategories(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var categories []Category
-	data := readCategoryBody(w, r, "Category could not be added")
+	data := readCategoryBody(w, r, "Could not identify sent Parameters")
 
 	categories, err = getAllCategories(data.UserID)
 	if err != nil {
@@ -236,7 +236,7 @@ func getAllergies(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var allergies []Allergy
-	data := readCategoryBody(w, r, "Category could not be added")
+	data := readAllergyBody(w, r, "Could not identify sent Parameters")
 
 	allergies, err = getAllAllergies(data.UserID)
 	if err != nil {
@@ -303,7 +303,7 @@ func getTables(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var tables []Table
-	data := readTableBody(w, r, "Table could not be added")
+	data := readTableBody(w, r, "Could not identify sent Parameters")
 
 	tables, err = getAllTables(data.UserID)
 	if err != nil {
@@ -370,7 +370,7 @@ func getFoods(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var foods []Food
-	data := readFoodBody(w, r, "Food could not be added")
+	data := readFoodBody(w, r, "Could not identify sent Parameters")
 
 	foods, err = getAllFoods(data.UserID)
 	if err != nil {
