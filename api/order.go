@@ -28,7 +28,7 @@ func getAllOrders(userID int) ([]Order, error) {
 
 func getAllActiveOrders(userID int) ([]Order, error) {
 	var orders []Order
-	rows, err := db.Query("SELECT order_id, table_id, complete FROM orders LEFT JOIN tables ON orders.table_id=tables.table_id WHERE user_id = ? AND complete=false", userID)
+	rows, err := db.Query("SELECT order_id, orders.table_id, complete FROM orders LEFT JOIN tables ON orders.table_id=tables.table_id WHERE user_id = ? AND complete=false", userID)
 	if err != nil {
 		return orders, err
 	}
@@ -114,7 +114,7 @@ func addFoodToOrderInDB(id int, foodID int) error {
 }
 
 func removeFoodFromOrderInDB(id int) error {
-	rows, err := db.Query("DELETE FROM order_food WHERE order__food_id=?", id)
+	rows, err := db.Query("DELETE FROM order_food WHERE order_food_id=?", id)
 	err = rows.Close()
 	if err != nil {
 		return err
