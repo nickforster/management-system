@@ -29,4 +29,42 @@ export class OrderService {
     }
   }
 
+  getAllOrders() {
+    this.readToken()
+    return this.http.post(this.API_URL + '/getOrders', {userId: this.userID}, this.headers)
+  }
+
+  getActiveOrders() {
+    this.readToken()
+    return this.http.post(this.API_URL + '/getActiveOrders', {userId: this.userID}, this.headers)
+  }
+
+  getOrdersOfTable(tableId: number) {
+    return this.http.post(this.API_URL + '/getTableOrders', {tableId: tableId}, this.headers)
+  }
+
+  insertOrder(tableId: number, complete: boolean) {
+    this.http.post(this.API_URL + '/createOrder', {tableId, complete}, this.headers).subscribe();
+  }
+
+  completeOrder(id: number) {
+    this.http.post(this.API_URL + '/completeOrder', {id}, this.headers).subscribe();
+  }
+
+  changeTableOfOrder(id: number, tableId: number) {
+    this.http.post(this.API_URL + '/changeTableOfOrder', {id, tableId}, this.headers).subscribe();
+  }
+
+  deleteOrder(id: number) {
+    this.http.post(this.API_URL + '/deleteOrder', {id}, this.headers).subscribe();
+  }
+
+  addFoodToOrder(orderId: number, foodId: number) {
+    this.http.post(this.API_URL + '/addFoodToOrder', {orderId, foodId}, this.headers).subscribe();
+  }
+
+  deleteFoodFromOrder(id: number) {
+    this.http.post(this.API_URL + '/deleteFoodFromOrder', {id}, this.headers).subscribe();
+  }
+
 }
