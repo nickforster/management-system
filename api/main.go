@@ -53,7 +53,7 @@ func main() {
 	mux.HandleFunc("/changeTableOfOrder", changeTableOfOrder)
 	mux.HandleFunc("/deleteOrder", deleteOrder)
 	mux.HandleFunc("/addFoodToOrder", addFoodToOrder)
-	mux.HandleFunc("/removeFoodFromOrder", removeFoodFromOrder)
+	mux.HandleFunc("/deleteFoodFromOrder", deleteFoodFromOrder)
 
 	handler := cors.AllowAll().Handler(mux)
 
@@ -461,37 +461,154 @@ func sendMail(w http.ResponseWriter, r *http.Request) {
 }
 
 func getOrders(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
 
+	var orders []Order
+	data := readBody(w, r, "Could not identify sent Parameters")
+
+	orders, err = getAllOrders(data.UserID)
+	if err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	} else {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusCreated)
+		json.NewEncoder(w).Encode(orders)
+	}
 }
 
 func getActiveOrders(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
 
+	var orders []Order
+	data := readBody(w, r, "Could not identify sent Parameters")
+
+	orders, err = getAllActiveOrders(data.UserID)
+	if err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	} else {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusCreated)
+		json.NewEncoder(w).Encode(orders)
+	}
 }
 
 func getTableOrders(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
 
+	var orders []Order
+	data := readOrderBody(w, r, "Could not identify sent Parameters")
+
+	orders, err = getOrdersOfTable(data.TableID)
+	if err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	} else {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusCreated)
+		json.NewEncoder(w).Encode(orders)
+	}
 }
 
 func createOrder(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
 
+	var errorMessage = "Order could not be added"
+	data := readOrderBody(w, r, errorMessage)
+	err := createOrderInDB(data.TableID, data.Complete)
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(200)
+	}
 }
 
 func completeOrder(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
 
+	var errorMessage = "Order could not be updated"
+	data := readOrderBody(w, r, errorMessage)
+	err := completeOrderInDB(data.Id)
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(200)
+	}
 }
 
 func changeTableOfOrder(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
 
+	var errorMessage = "Order could not be updated"
+	data := readOrderBody(w, r, errorMessage)
+	err := changeTableOfOrderInDB(data.Id, data.TableID)
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(200)
+	}
 }
 
 func deleteOrder(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
 
+	var errorMessage = "Order could not be deleted"
+	data := readOrderBody(w, r, errorMessage)
+	err := deleteOrderInDB(data.Id)
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(200)
+	}
 }
 
 func addFoodToOrder(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
 
+	var errorMessage = "Order could not be added"
+	data := readOrderFoodBody(w, r, errorMessage)
+	err := addFoodToOrderInDB(data.OrderID, data.FoodID)
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(200)
+	}
 }
 
-func removeFoodFromOrder(w http.ResponseWriter, r *http.Request) {
+func deleteFoodFromOrder(w http.ResponseWriter, r *http.Request) {
+	if !isAuthorised(r) {
+		http.Error(w, "Not logged in!", http.StatusUnauthorized)
+		return
+	}
 
+	var errorMessage = "Food could not be deleted from Order"
+	data := readOrderFoodBody(w, r, errorMessage)
+	err := removeFoodFromOrderInDB(data.Id)
+	if err != nil {
+		http.Error(w, errorMessage, http.StatusInternalServerError)
+	} else {
+		w.WriteHeader(200)
+	}
 }
