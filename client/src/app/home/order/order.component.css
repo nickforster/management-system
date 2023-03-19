@@ -1,0 +1,82 @@
+.content {
+  background-color: #ADAABF;
+  padding: 1rem;
+  border-radius: 1rem;
+  transition: opacity 250ms linear;
+  border: 2px solid black;
+}
+
+select, option, input, button {
+  display: block;
+  background-color: #eaeaea;
+  border: .25rem solid #ADAABF;
+  border-radius: 7px;
+  padding: .2rem;
+  -moz-appearance:textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input:focus, select:focus {
+  outline: none;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: row;
+}
+
+input[type="number"] {
+  width: 1rem;
+  padding-left: .75rem;
+}
+
+.amount-input {
+  display: flex;
+  flex-direction: row;
+}
+
+@keyframes blob {
+  0% {
+    transform: scale(1);
+  }
+  33% {
+    transform: scale(1.3);
+  }
+  67% {
+    transform: scale(0.7);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+button {
+  background-color: #5b00af;
+  color: white;
+}
+
+button:hover {
+  animation: blob 400ms linear;
+}
+
+.update-amount {
+  background-color: #eaeaea !important;
+  color: black;
+}
+
+.update-amount:hover {
+  animation: none;
+  background-color: #cccccc !important;
+}
+
+#button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+

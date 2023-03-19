@@ -1,0 +1,28 @@
+<div data-keyboard="false" class="content">
+  <h2>{{title}}</h2>
+
+  <div id="container">
+    <div *ngFor="let id of foodsToAdd; let i = index" class="input-container">
+      <div class="single-input">
+        <select [(ngModel)]="selectedFood[i]">
+          <option *ngFor="let food of foods">{{food.name}}</option> <!--  ngFor    -->
+        </select>
+      </div>
+      <div class="amount-input">
+        <button (click)="subtract(i)" class="update-amount">-</button>
+        <input type="number" min="1" [(ngModel)]="selectedAmount[i]">
+        <button (click)="selectedAmount[i] = selectedAmount[i] + 1" class="update-amount">+</button>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <button (click)="foodsToAdd.push(foods[0].id); selectedAmount.push(1)">+ Add Food</button>
+  </div>
+
+  <div id="button-container">
+    <button (click)="save()">save</button>
+    <button (click)="abort()">abort</button>
+  </div>
+  <p id="error-msg" *ngIf="errorMessage">Please add at least one Food</p>
+</div>
