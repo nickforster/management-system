@@ -23,6 +23,9 @@ import { FooterComponent } from './footer/footer.component';
 import { SupportComponent } from './infos/support/support.component';
 import { ContactComponent } from './infos/contact/contact.component';
 import { LogsComponent } from './logs/logs.component';
+import { OrderComponent } from './home/order/order.component';
+import { BillComponent } from './home/bill/bill.component';
+import { HistoryComponent } from './home/history/history.component';
 
 
 @NgModule({
@@ -42,7 +45,10 @@ import { LogsComponent } from './logs/logs.component';
     FooterComponent,
     SupportComponent,
     ContactComponent,
-    LogsComponent
+    LogsComponent,
+    OrderComponent,
+    BillComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,

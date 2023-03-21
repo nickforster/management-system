@@ -17,3 +17,7 @@
   </main>
 </div>
 <app-footer></app-footer>
+<app-order *ngIf="newOrder" class="modals"></app-order>
+<app-order *ngIf="editOrder" class="modals" title="Edit Order"></app-order>
+<app-bill *ngIf="showBill" class="modals"></app-bill>
+<app-history *ngIf="showHistory" class="modals"></app-history>
